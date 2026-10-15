@@ -14,11 +14,6 @@ if (!fs.existsSync(ARCHIVO_USUARIOS)) {
     fs.writeFileSync(ARCHIVO_USUARIOS, JSON.stringify([]));
 }
 
-// Limpiar registros antiguos para empezar limpios
-['viajes_sorpresa_desglose.csv', 'viajes_medida_desglose.csv'].forEach(file => {
-    if (fs.existsSync(file)) fs.unlinkSync(file);
-});
-
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
@@ -56,7 +51,7 @@ app.post('/api/auth/login', (req, res) => {
     }
 });
 
-// MOTOR DE INTELIGENCIA DE VIAJES EXECUTIVO
+// MOTOR DE INTELIGENCIA DE VIAJES EJECUTIVO
 function procesarIAViaje(peticion, presupuesto) {
     const txt = (peticion || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     const pres = parseInt(presupuesto || 450, 10);
@@ -139,8 +134,6 @@ function procesarIAViaje(peticion, presupuesto) {
 function calcularDesgloseFinanciero(presupuestoUnitario, pasajeros, vueloBase, hotelBase) {
     const totalPers = presupuestoUnitario || 450;
     const totalPax = pasajeros || 1;
-    let costeVuelo = Math.min(vueloBase || 150, Math.round(totalPers * 0.35));
-    let costeHotel = Math.min(hotelBase || 250, Math.round(totalPers * 0.40));
     let totalFinal = totalPers * totalPax;
     return { total: totalFinal + '€' };
 }
@@ -191,7 +184,6 @@ app.post('/api/pagar', (req, res) => {
         if (!fs.existsSync(archivoCsv)) {
             fs.writeFileSync(archivoCsv, `"CodigoReserva","Titular","Email","Telefono","Pasajeros","Destino","Hotel","Vuelo","Total"\n`);
         }
-        // Orden estricto de columnas para evitar desajustes
         fs.appendFileSync(archivoCsv, `"${codigoReserva}","${titular || 'Anónimo'}","${emailCliente || 'N/A'}","${telefonoCliente || 'N/A'}","${numPasajeros}","${destino}","${hotelInfo || ''}","${vueloInfo || 'Directo'}","${desglose.total}"\n`);
 
         console.log(`✅ Pago procesado y registrado: ${codigoReserva}`);
