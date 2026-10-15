@@ -182,7 +182,7 @@
         </section>
 
         <!-- 🔒 SECCIÓN DESARROLLADOR -->
-        <section id="seccion-desarrollador" class="hidden space-y-8 max-w-6xl mx-auto">
+        <section id="seccion-desarrollador" class="hidden space-y-8 max-w-7xl mx-auto">
             <div id="dev-login-box" class="bg-white rounded-2xl shadow-xl p-8 max-w-md mx-auto border space-y-4">
                 <h3 class="text-2xl font-black text-amber-600 text-center">🔐 Acceso Desarrollador</h3>
                 <form onsubmit="verificarDevLogin(event)" class="space-y-3">
@@ -201,14 +201,14 @@
 
             <div id="dev-panel-datos" class="hidden space-y-8">
                 <div class="flex justify-between items-center bg-white p-6 rounded-2xl shadow border">
-                    <h2 class="text-2xl font-black text-indigo-900">📊 Panel de Registros y Contacto de Clientes</h2>
+                    <h2 class="text-2xl font-black text-indigo-900">📊 Panel de Registros, Vuelos y Clientes</h2>
                     <button onclick="cargarRegistrosDev()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-bold">🔄 Actualizar</button>
                 </div>
 
                 <!-- Tabla Sorpresa -->
                 <div class="bg-white rounded-2xl shadow-xl p-6 border space-y-4 overflow-x-auto">
-                    <h3 class="text-xl font-bold text-indigo-800">✈️ Viajes Sorpresa (Con Contacto de Cliente)</h3>
-                    <table class="w-full text-left text-xs border-collapse min-w-[900px]">
+                    <h3 class="text-xl font-bold text-indigo-800">✈️ Viajes Sorpresa (Con Vuelo y Contacto)</h3>
+                    <table class="w-full text-left text-xs border-collapse min-w-[1000px]">
                         <thead>
                             <tr class="bg-slate-100 border-b">
                                 <th class="p-2 border">Código</th>
@@ -218,6 +218,7 @@
                                 <th class="p-2 border">Pax</th>
                                 <th class="p-2 border">Destino Real</th>
                                 <th class="p-2 border">Hotel Asignado</th>
+                                <th class="p-2 border">Vuelo (Compañía, Nº y Hora)</th>
                                 <th class="p-2 border">Total</th>
                             </tr>
                         </thead>
@@ -227,8 +228,8 @@
 
                 <!-- Tabla Medida -->
                 <div class="bg-white rounded-2xl shadow-xl p-6 border space-y-4 overflow-x-auto">
-                    <h3 class="text-xl font-bold text-indigo-800">🗺️ Viajes a Medida (Con Contacto de Cliente)</h3>
-                    <table class="w-full text-left text-xs border-collapse min-w-[900px]">
+                    <h3 class="text-xl font-bold text-indigo-800">🗺️ Viajes a Medida (Con Vuelo y Contacto)</h3>
+                    <table class="w-full text-left text-xs border-collapse min-w-[1000px]">
                         <thead>
                             <tr class="bg-slate-100 border-b">
                                 <th class="p-2 border">Código</th>
@@ -238,6 +239,7 @@
                                 <th class="p-2 border">Pax</th>
                                 <th class="p-2 border">Destino</th>
                                 <th class="p-2 border">Hotel Asignado</th>
+                                <th class="p-2 border">Vuelo (Compañía, Nº y Hora)</th>
                                 <th class="p-2 border">Total</th>
                             </tr>
                         </thead>
@@ -345,9 +347,8 @@
                 const tr = document.createElement('tr');
                 tr.className = "border-b hover:bg-slate-50";
                 
-                // Mostrar celdas clave (Codigo, Titular, Email, Telefono, Pax, Destino, Hotel, Total)
-                const indicesAVisualizar = [0, 1, 2, 3, 4, 5, 6, 12];
-                indicesAVisualizar.forEach(idx => {
+                // Mapeo: Codigo(0), Titular(1), Email(2), Telefono(3), Pax(4), Destino(5), Hotel(6), Vuelo(7), Total(8)
+                [0, 1, 2, 3, 4, 5, 6, 7, 8].forEach(idx => {
                     const td = document.createElement('td');
                     td.className = "p-2 border text-slate-700";
                     td.innerText = columnas[idx] || '';
@@ -439,7 +440,8 @@
                 pasajeros: datosUltimoViaje.pasajeros,
                 costeVueloBase: datosUltimoViaje.costeVueloBase,
                 costeHotelBase: datosUltimoViaje.costeHotelBase,
-                hotelInfo: datosUltimoViaje.hotelInfo
+                hotelInfo: datosUltimoViaje.hotelInfo,
+                vueloInfo: datosUltimoViaje.vueloInfo
             };
 
             try {

@@ -14,6 +14,11 @@ if (!fs.existsSync(ARCHIVO_USUARIOS)) {
     fs.writeFileSync(ARCHIVO_USUARIOS, JSON.stringify([]));
 }
 
+// Limpiar archivos de registros antiguos al arrancar para empezar limpios
+['viajes_sorpresa_desglose.csv', 'viajes_medida_desglose.csv'].forEach(file => {
+    if (fs.existsSync(file)) fs.unlinkSync(file);
+});
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
@@ -51,14 +56,14 @@ app.post('/api/auth/login', (req, res) => {
     }
 });
 
-// MOTOR DE INTELIGENCIA DE VIAJES NATIVO
+// MOTOR DE INTELIGENCIA DE VIAJES CON DATOS DETALLADOS DE VUELO
 function procesarIAViaje(peticion, presupuesto) {
     const txt = (peticion || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     const pres = parseInt(presupuesto || 450, 10);
 
-    const esIslaOPlaya = txt.includes('isla') || txt.includes('mar') || txt.includes('playa') || txt.includes('caribe') || txt.includes('sol') || txt.includes('costa') || txt.includes('arena');
-    const esFrioONieve = txt.includes('frio') || txt.includes('nieve') || txt.includes('suiza') || txt.includes('alpes') || txt.includes('esqui') || txt.includes('islandia');
-    const esAsiaOExotico = txt.includes('japon') || txt.includes('tokio') || txt.includes('asia') || txt.includes('bali') || txt.includes('tailandia');
+    const esIslaOPlaya = txt.includes('isla') || txt.includes('mar') || txt.includes('playa') || txt.includes('caribe') || txt.includes('sol');
+    const esFrioONieve = txt.includes('frio') || txt.includes('nieve') || txt.includes('suiza') || txt.includes('alpes');
+    const esAsiaOExotico = txt.includes('japon') || txt.includes('tokio') || txt.includes('asia') || txt.includes('bali');
     const esLujoPresupuestoAlto = pres >= 1500;
 
     let resultado = {};
@@ -67,20 +72,20 @@ function procesarIAViaje(peticion, presupuesto) {
         if (esLujoPresupuestoAlto) {
             resultado = {
                 destino: "Bora Bora & Tahití, Polinesia Francesa",
-                vueloNombre: "Air Tahiti Nui / Air France (Salida BIO 06:40h - Escala)",
+                vueloInfo: "Air Tahiti Nui (Vuelo TN-072 - Salida 06:40h)",
                 hotelNombre: "Overwater Villa Resort 5* Deluxe",
                 actividadesTexto: "Navegación privada en catamarán y baño con mantarrayas.",
-                pistas: ["Atolones de coral paradisíacos y bungalows sobre aguas turquesas.", "Exclusividad máxima en el Pacífico."],
-                equipaje: "Bañadores, protector solar biodegradable y ropa ligera de lino.",
-                costeVueloBase: 1200, costeHotelBase: 2500, duracionVuelo: "Aproximadamente 18h - 22h de vuelo"
+                pistas: ["Atolones de coral paradisíacos y bungalows sobre aguas turquesas."],
+                equipaje: "Bañadores, protector solar biodegradable y ropa ligera.",
+                costeVueloBase: 1200, costeHotelBase: 2500, duracionVuelo: "Aproximadamente 18h de vuelo"
             };
         } else {
             resultado = {
                 destino: "Santorini & Islas Cícladas, Grecia",
-                vueloNombre: "Aegean Airlines / Vueling (Salida BIO 07:10h)",
+                vueloInfo: "Aegean Airlines (Vuelo A3-752 - Salida 07:10h)",
                 hotelNombre: "Caldera Premium Villas 4*",
                 actividadesTexto: "Paseo en velero al atardecer y cata de vinos.",
-                pistas: ["Casitas blancas con cúpulas azules sobre el mar Egeo.", "Atardeceres inolvidables y ambiente mediterráneo."],
+                pistas: ["Casitas blancas con cúpulas azules sobre el mar Egeo."],
                 equipaje: "Ropa fresca de algodón, gafas de sol y calzado cómodo.",
                 costeVueloBase: 180, costeHotelBase: 280, duracionVuelo: "Aproximadamente 3h y media de vuelo"
             };
@@ -88,41 +93,41 @@ function procesarIAViaje(peticion, presupuesto) {
     } else if (esFrioONieve) {
         resultado = {
             destino: "Ginebra & Alpes Suizos, Suiza",
-            vueloNombre: "Swiss Air (Salida Directa BIO 07:15h)",
+            vueloInfo: "Swiss Air (Vuelo LX-2064 - Salida 07:15h)",
             hotelNombre: "Alpine Lodge & Thermal Spa Resort 5*",
             actividadesTexto: "Pase VIP de montaña y acceso privado a baños termales.",
-            pistas: ["Majestuosos picos alpinos, lagos helados y estaciones de esquí.", "Entorno exclusivo de nieve."],
+            pistas: ["Majestuosos picos alpinos, lagos helados y estaciones de esquí."],
             equipaje: "Ropa térmica de abrigo, chaqueta impermeable y botas de nieve.",
             costeVueloBase: 220, costeHotelBase: 500, duracionVuelo: "Aproximadamente 2 horas de vuelo directo"
         };
     } else if (esAsiaOExotico) {
         resultado = {
             destino: "Tokio & Kioto, Japón",
-            vueloNombre: "Qatar Airways / ANA (Salida BIO 14:15h)",
+            vueloInfo: "Qatar Airways (Vuelo QR-148 - Salida 14:15h)",
             hotelNombre: "Hotel Gracery Shinjuku & Ryokan Tradicional 5*",
             actividadesTexto: "Pase Shinkansen, entradas a teamLab Planets y ceremonias.",
-            pistas: ["Fusión única de tecnología futurista y cultura ancestral.", "Gastronomía galardonada con estrellas Michelin."],
+            pistas: ["Fusión única de tecnología futurista y cultura ancestral."],
             equipaje: "Calzado ultrasuave para caminar mucho y ropa elegante casual.",
-            costeVueloBase: 650, costeHotelBase: 800, duracionVuelo: "Aproximadamente 14h - 16h de vuelo"
+            costeVueloBase: 650, costeHotelBase: 800, duracionVuelo: "Aproximadamente 14h de vuelo"
         };
     } else {
         if (esLujoPresupuestoAlto) {
             resultado = {
                 destino: "Nueva York, Estados Unidos",
-                vueloNombre: "Delta Air Lines / Iberia (Salida BIO 08:30h)",
+                vueloInfo: "Delta Air Lines (Vuelo DL-418 - Salida 08:30h)",
                 hotelNombre: "The Plaza Hotel Fifth Avenue (Manhattan)",
                 actividadesTexto: "Vuelo en helicóptero sobre Manhattan y Broadway VIP.",
-                pistas: ["La gran metrópoli mundial repleta de rascacielos icónicos.", "Compras exclusivas y Central Park."],
+                pistas: ["La gran metrópoli mundial repleta de rascacielos icónicos."],
                 equipaje: "Ropa urbana con estilo y calzado cómodo.",
-                costeVueloBase: 550, costeHotelBase: 900, duracionVuelo: "Aproximadamente 8h - 10h de vuelo"
+                costeVueloBase: 550, costeHotelBase: 900, duracionVuelo: "Aproximadamente 8h de vuelo"
             };
         } else {
             resultado = {
                 destino: "París, Francia",
-                vueloNombre: "Air France (Salida Directa BIO 10:30h)",
+                vueloInfo: "Air France (Vuelo AF-1240 - Salida 10:30h)",
                 hotelNombre: "Le Meurice Palace (Junto a Tullerías)",
                 actividadesTexto: "Cena privada en crucero por el Sena y Louvre prioritario.",
-                pistas: ["Capital mundial del arte, la moda y monumentos imperiales.", "Románticos paseos por la ciudad."],
+                pistas: ["Capital mundial del arte, la moda y monumentos imperiales."],
                 equipaje: "Ropa elegante e informal y abrigo ligero.",
                 costeVueloBase: 180, costeHotelBase: 450, duracionVuelo: "Aproximadamente 1h y 35m de vuelo"
             };
@@ -167,7 +172,7 @@ app.post('/api/viaje', async (req, res) => {
         titulo: tipo === 'medida' ? "🗺️ Propuesta Exclusiva a Medida" : "✈️ Destino Secreto Asignado",
         destinoAsignado: tipo === 'medida' ? resultado.destino : "--------------- (Destino Secreto)",
         destinoRealInterno: resultado.destino,
-        vueloInfo: resultado.vueloNombre,
+        vueloInfo: resultado.vueloInfo,
         hotelInfo: resultado.hotelNombre,
         actividadesInfo: resultado.actividadesTexto,
         tiempoVueloEst: resultado.duracionVuelo,
@@ -186,7 +191,7 @@ app.post('/api/viaje', async (req, res) => {
 
 app.post('/api/pagar', (req, res) => {
     try {
-        const { titular, emailCliente, telefonoCliente, importe, destino, tipoViaje, pasajeros, costeVueloBase, costeHotelBase, hotelInfo } = req.body;
+        const { titular, emailCliente, telefonoCliente, importe, destino, tipoViaje, pasajeros, costeVueloBase, costeHotelBase, hotelInfo, vueloInfo } = req.body;
         const codigoReserva = 'BT-' + Math.floor(100000 + Math.random() * 900000);
 
         const numPasajeros = parseInt(pasajeros || 1, 10);
@@ -197,18 +202,17 @@ app.post('/api/pagar', (req, res) => {
 
         const archivoCsv = tipoViaje === 'sorpresa' ? 'viajes_sorpresa_desglose.csv' : 'viajes_medida_desglose.csv';
         if (!fs.existsSync(archivoCsv)) {
-            fs.writeFileSync(archivoCsv, `"CodigoReserva","Titular","Email","Telefono","Pasajeros","Destino","Hotel_Nombre","Vuelo_Avion","Hotel_Alojamiento","Actividades","Comida","Seguro_Traslados","Total"\n`);
+            fs.writeFileSync(archivoCsv, `"CodigoReserva","Titular","Email","Telefono","Pasajeros","Destino","Hotel","Vuelo","Total"\n`);
         }
-        fs.appendFileSync(archivoCsv, `"${codigoReserva}","${titular || 'Anónimo'}","${emailCliente || 'No indicado'}","${telefonoCliente || 'No indicado'}","${numPasajeros}","${destino}","${hotelInfo || ''}","${desglose.vuelo}","${desglose.hotel}","${desglose.actividades}","${desglose.comida}","${desglose.seguro}","${desglose.total}"\n`);
+        fs.appendFileSync(archivoCsv, `"${codigoReserva}","${titular || 'Anónimo'}","${emailCliente || 'N/A'}","${telefonoCliente || 'N/A'}","${numPasajeros}","${destino}","${hotelInfo || ''}","${vueloInfo || 'Vuelo Directo'}","${desglose.total}"\n`);
 
-        console.log(`✅ Pago procesado y registrado con contacto: ${codigoReserva}`);
+        console.log(`✅ Pago procesado y registrado: ${codigoReserva}`);
         res.json({ exito: true, codigoReserva });
     } catch (err) {
         res.status(500).json({ exito: false, mensaje: err.message });
     }
 });
 
-// ENDPOINT SECRETO PARA EL DESARROLLADOR
 app.get('/api/desarrollador/registros', (req, res) => {
     try {
         let sorpresas = [];
