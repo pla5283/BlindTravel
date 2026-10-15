@@ -3,247 +3,276 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlindTravel - Agencia de Viajes Sorpresa y a Medida</title>
+    <title>BlindTravel - Global Executive Travel Agency</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
 
-    <!-- Header / Navbar -->
-    <header class="bg-indigo-700 text-white shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-black cursor-pointer" onclick="mostrarSeccion('inicio')">✈️ BlindTravel</h1>
-            <nav class="hidden md:flex items-center space-x-6 font-medium">
-                <button onclick="mostrarSeccion('inicio')" id="nav-inicio" class="hover:text-indigo-200 border-b-2 border-white pb-1 font-bold">Inicio</button>
-                <button onclick="mostrarSeccion('sorpresa')" id="nav-sorpresa" class="hover:text-indigo-200 pb-1">Viaje Sorpresa</button>
-                <button onclick="mostrarSeccion('medida')" id="nav-medida" class="hover:text-indigo-200 pb-1">Viaje a Medida</button>
-                <button onclick="mostrarSeccion('contacto')" id="nav-contacto" class="hover:text-indigo-200 pb-1">Contáctanos</button>
-                <button onclick="mostrarSeccion('desarrollador')" id="nav-desarrollador" class="hover:text-amber-300 pb-1 text-amber-200 font-bold">🔒 Desarrollador</button>
+    <!-- Header / Navbar Corporativo -->
+    <header class="bg-slate-950/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="mostrarSeccion('inicio')">
+                <span class="text-2xl">✈️</span>
+                <h1 class="text-xl font-bold tracking-tight text-white">Blind<span class="text-indigo-400">Travel</span></h1>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <button onclick="mostrarSeccion('inicio')" id="nav-inicio" class="text-white border-b-2 border-indigo-500 pb-1 transition">Inicio</button>
+                <button onclick="mostrarSeccion('sorpresa')" id="nav-sorpresa" class="text-slate-400 hover:text-white pb-1 transition">Viaje Sorpresa</button>
+                <button onclick="mostrarSeccion('medida')" id="nav-medida" class="text-slate-400 hover:text-white pb-1 transition">Viaje a Medida</button>
+                <button onclick="mostrarSeccion('contacto')" id="nav-contacto" class="text-slate-400 hover:text-white pb-1 transition">Contáctanos</button>
+                <button onclick="mostrarSeccion('desarrollador')" id="nav-desarrollador" class="text-amber-400 hover:text-amber-300 pb-1 font-semibold transition">🔒 Desarrollador</button>
             </nav>
-            <button onclick="abrirModalAuth()" id="btn-nav-auth" class="bg-white text-indigo-700 font-bold px-4 py-2 rounded-lg shadow hover:bg-indigo-50">Iniciar Sesión</button>
+            <button onclick="abrirModalAuth()" id="btn-nav-auth" class="bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold px-5 py-2 rounded-lg shadow-sm transition">Iniciar Sesión</button>
         </div>
     </header>
 
-    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
+    <main class="flex-grow max-w-7xl mx-auto px-6 py-10 w-full">
 
         <!-- INICIO -->
-        <section id="seccion-inicio" class="space-y-12">
-            <div class="bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-2xl p-10 md:p-16 text-center shadow-xl space-y-6">
-                <span class="bg-indigo-500 text-xs uppercase tracking-widest px-3 py-1 rounded-full font-bold">La nueva forma de viajar</span>
-                <h2 class="text-4xl md:text-6xl font-black">¿Listo para no saber a dónde vas hasta llegar al aeropuerto?</h2>
-                <p class="max-w-2xl mx-auto text-indigo-100 text-lg">Creamos experiencias inolvidables ajustadas a tu presupuesto. Nos encargamos de todo manteniendo el destino oculto.</p>
+        <section id="seccion-inicio" class="space-y-16">
+            <div class="bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-900 border border-slate-800 rounded-3xl p-12 md:p-20 text-center shadow-2xl space-y-8 relative overflow-hidden">
+                <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/20 via-transparent to-transparent pointer-events-none"></div>
+                <span class="inline-block bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs uppercase tracking-widest px-4 py-1.5 rounded-full font-semibold">Exclusividad & Misterio</span>
+                <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-tight">Viajes de lujo y sorpresa desvelados en el aeropuerto.</h2>
+                <p class="max-w-2xl mx-auto text-slate-400 text-lg font-light leading-relaxed">Diseñamos experiencias globales adaptadas a tu presupuesto. Vuelos ejecutivos, hoteles seleccionados de categoría superior y asistencia integral.</p>
                 <div class="pt-4 flex flex-wrap justify-center gap-4">
-                    <button onclick="mostrarSeccion('sorpresa')" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition text-lg">¡Reservar Viaje Sorpresa!</button>
-                    <button onclick="mostrarSeccion('medida')" class="bg-white text-indigo-700 hover:bg-slate-100 font-bold px-8 py-3.5 rounded-xl shadow-lg transition text-lg">Diseñar a Medida</button>
+                    <button onclick="mostrarSeccion('sorpresa')" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-8 py-4 rounded-xl shadow-lg transition text-base">Reservar Viaje Sorpresa</button>
+                    <button onclick="mostrarSeccion('medida')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold px-8 py-4 rounded-xl transition text-base">Solicitar a Medida</button>
+                </div>
+            </div>
+
+            <!-- Ventajas Corporativas -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-slate-950 border border-slate-800/80 p-8 rounded-2xl shadow-lg space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 text-xl font-bold">01</div>
+                    <h3 class="text-xl font-bold text-white">Inteligencia Artificial Avanzada</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Algoritmos de alta precisión que configuran el destino, itinerario y logística en segundos basándose en tus preferencias.</p>
+                </div>
+                <div class="bg-slate-950 border border-slate-800/80 p-8 rounded-2xl shadow-lg space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 text-xl font-bold">02</div>
+                    <h3 class="text-xl font-bold text-white">Alojamientos Verificados 4* & 5*</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Selección rigurosa de hoteles céntricos y complejos vacacionales con estándares internacionales de excelencia.</p>
+                </div>
+                <div class="bg-slate-950 border border-slate-800/80 p-8 rounded-2xl shadow-lg space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 text-xl font-bold">03</div>
+                    <h3 class="text-xl font-bold text-white">Transparencia Financiera</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Desglose exhaustivo de costes operativos, vuelos, seguros y actividades disponible de forma privada.</p>
                 </div>
             </div>
         </section>
 
         <!-- VIAJE SORPRESA -->
         <section id="seccion-sorpresa" class="hidden space-y-8 max-w-3xl mx-auto">
-            <div class="bg-white rounded-2xl shadow-xl p-8 border space-y-6">
-                <div class="border-b pb-4">
-                    <h2 class="text-2xl font-black text-indigo-900">✈️ Planifica tu Viaje Sorpresa</h2>
-                    <p class="text-slate-500 text-sm">Indica tus gustos y deja que el equipo organice tu experiencia.</p>
+            <div class="bg-slate-950 border border-slate-800 rounded-3xl p-10 shadow-xl space-y-6">
+                <div class="border-b border-slate-800 pb-5">
+                    <h2 class="text-2xl font-bold text-white">✈️ Configuración de Viaje Sorpresa</h2>
+                    <p class="text-slate-400 text-sm mt-1">Indique sus expectativas y presupuesto para que el sistema elabore la propuesta óptima.</p>
                 </div>
 
-                <form onsubmit="handleSolicitarViaje(event)" class="space-y-4">
+                <form onsubmit="handleSolicitarViaje(event)" class="space-y-5">
                     <div>
-                        <label class="block text-sm font-semibold mb-1">Restricciones / Pistas / Preferencias:</label>
-                        <textarea id="viaje-peticion" rows="3" required class="w-full border rounded-xl px-4 py-3 outline-none" placeholder="Ej. Isla con mucho mar, tranquilidad..."></textarea>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Preferencias / Pistas / Estilo:</label>
+                        <textarea id="viaje-peticion" rows="3" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-indigo-500 transition" placeholder="Ej. Isla paradisíaca con mar cristalino, relax total..."></textarea>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                         <div>
-                            <label class="block text-sm font-semibold mb-1">Presupuesto por persona (€)</label>
-                            <input type="number" id="viaje-presupuesto" value="450" min="100" required class="w-full border rounded-xl px-4 py-3 outline-none">
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Presupuesto / Pers. (€)</label>
+                            <input type="number" id="viaje-presupuesto" value="450" min="100" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-indigo-500 transition">
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold mb-1">Pasajeros</label>
-                            <input type="number" id="viaje-pasajeros" value="1" min="1" max="10" required class="w-full border rounded-xl px-4 py-3 outline-none">
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Pasajeros</label>
+                            <input type="number" id="viaje-pasajeros" value="1" min="1" max="10" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-indigo-500 transition">
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold mb-1">Fecha Salida</label>
-                            <input type="date" id="viaje-salida" required class="w-full border rounded-xl px-4 py-3 outline-none">
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Fecha Salida</label>
+                            <input type="date" id="viaje-salida" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-indigo-500 transition">
                         </div>
                     </div>
                     <div>
-                        <label class="block text-sm font-semibold mb-1">Fecha Regreso</label>
-                        <input type="date" id="viaje-regreso" required class="w-full border rounded-xl px-4 py-3 outline-none">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Fecha Regreso</label>
+                        <input type="date" id="viaje-regreso" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-indigo-500 transition">
                     </div>
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition">Generar Propuesta Sorpresa</button>
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-4 rounded-xl shadow-lg transition">Generar Propuesta Inteligente</button>
                 </form>
             </div>
 
             <!-- RESULTADO PÚBLICO -->
-            <div id="resultado-seccion" class="bg-white rounded-2xl shadow-xl p-8 hidden space-y-6 border">
-                <h3 id="res-titulo" class="text-2xl font-black text-indigo-900"></h3>
-                <div class="bg-indigo-50 p-6 rounded-xl space-y-3 text-sm">
-                    <p class="text-base"><strong>Destino Asignado:</strong> <span id="res-destino" class="font-bold text-indigo-700">--------------- (Oculto hasta el aeropuerto)</span></p>
-                    <p><strong>Origen de Salida:</strong> <span id="res-origen">Donostia-San Sebastián / Bilbao (BIO)</span></p>
-                    <p><strong>Duración Estimada del Vuelo:</strong> <span id="res-tiempo"></span></p>
+            <div id="resultado-seccion" class="bg-slate-950 border border-slate-800 rounded-3xl p-10 hidden space-y-6 shadow-xl">
+                <h3 id="res-titulo" class="text-2xl font-bold text-white"></h3>
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-3 text-sm text-slate-300">
+                    <p class="text-base"><strong>Destino Asignado:</strong> <span id="res-destino" class="font-bold text-indigo-400">--------------- (Confidencial hasta el embarque)</span></p>
+                    <p><strong>Origen de Salida:</strong> <span>Donostia-San Sebastián / Bilbao (BIO)</span></p>
+                    <p><strong>Duración Estimada:</strong> <span id="res-tiempo"></span></p>
                     <p><strong>Equipaje Recomendado:</strong> <span id="res-equipaje"></span></p>
                     <div id="bloque-pistas" class="pt-2">
-                        <strong class="block mb-1">Pistas del Destino:</strong>
-                        <ul id="res-pistas" class="list-disc list-inside space-y-1 text-slate-700"></ul>
+                        <strong class="block mb-1 text-slate-200">Pistas del Destino:</strong>
+                        <ul id="res-pistas" class="list-disc list-inside space-y-1 text-slate-400"></ul>
                     </div>
-                    <p class="text-xl font-black text-emerald-700 pt-3">Precio Estimado: <span id="res-precio"></span></p>
+                    <p class="text-xl font-extrabold text-emerald-400 pt-3">Inversión Estimada: <span id="res-precio"></span></p>
                 </div>
 
-                <!-- PAGO CON CONTACTO -->
-                <div class="border-t pt-6">
-                    <h4 class="font-bold text-lg mb-4">💳 Datos de Contacto y Pago</h4>
+                <!-- PAGO -->
+                <div class="border-t border-slate-800 pt-6 space-y-4">
+                    <h4 class="font-bold text-lg text-white">💳 Pasarela de Pago Segura</h4>
                     <form onsubmit="handlePagar(event)" class="space-y-4">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-sm font-medium mb-1">Titular de la Tarjeta</label>
-                                <input type="text" id="pago-titular" required class="w-full border rounded-xl px-4 py-3 outline-none" placeholder="Nombre completo">
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Titular de la Tarjeta</label>
+                                <input type="text" id="pago-titular" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-indigo-500" placeholder="Nombre completo">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium mb-1">Correo Electrónico (Contacto)</label>
-                                <input type="email" id="pago-email" required class="w-full border rounded-xl px-4 py-3 outline-none" placeholder="cliente@correo.com">
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Correo Electrónico (Notificaciones)</label>
+                                <input type="email" id="pago-email" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-indigo-500" placeholder="cliente@correo.com">
                             </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
-                                <label class="block text-sm font-medium mb-1">Teléfono Móvil</label>
-                                <input type="tel" id="pago-telefono" required class="w-full border rounded-xl px-4 py-3 outline-none" placeholder="+34 600000000">
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Teléfono Móvil</label>
+                                <input type="tel" id="pago-telefono" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-indigo-500" placeholder="+34 600000000">
                             </div>
                             <div class="md:col-span-2">
-                                <label class="block text-sm font-medium mb-1">Número de Tarjeta</label>
-                                <input type="text" id="pago-tarjeta" required maxlength="19" class="w-full border rounded-xl px-4 py-3 outline-none" placeholder="1234 5678 9101 1121">
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Número de Tarjeta</label>
+                                <input type="text" id="pago-tarjeta" required maxlength="19" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-indigo-500" placeholder="4532 0000 0000 0000">
                             </div>
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-sm font-medium mb-1">Caducidad</label>
-                                <input type="text" id="pago-exp" required placeholder="MM/AA" maxlength="5" class="w-full border rounded-xl px-4 py-3 text-center outline-none">
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Caducidad</label>
+                                <input type="text" id="pago-exp" required placeholder="MM/AA" maxlength="5" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-3 text-center text-slate-100 focus:outline-none">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium mb-1">CVC</label>
-                                <input type="text" id="pago-cvc" required placeholder="CVC" maxlength="4" class="w-full border rounded-xl px-4 py-3 text-center outline-none">
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">CVC</label>
+                                <input type="text" id="pago-cvc" required placeholder="CVC" maxlength="4" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-3 text-center text-slate-100 focus:outline-none">
                             </div>
                         </div>
-                        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition">Pagar y Guardar Reserva</button>
+                        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-4 rounded-xl shadow-lg transition">Autorizar Pago y Registrar Reserva</button>
                     </form>
                 </div>
             </div>
 
             <!-- ÉXITO -->
-            <div id="exito-reserva" class="bg-emerald-50 border border-emerald-200 text-emerald-800 p-8 rounded-2xl shadow-xl hidden text-center space-y-4">
-                <h3 class="text-3xl font-black">🎉 ¡Reserva Confirmada con Éxito!</h3>
-                <p>Código de Reserva: <strong id="codigo-reserva" class="text-2xl"></strong></p>
-                <p class="text-sm">Tus datos y contacto han quedado guardados en el sistema de gestión.</p>
-                <button onclick="mostrarSeccion('inicio')" class="bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold">Volver al Inicio</button>
+            <div id="exito-reserva" class="bg-slate-950 border border-emerald-500/30 text-slate-200 p-10 rounded-3xl shadow-xl hidden text-center space-y-4">
+                <div class="text-4xl">🎉</div>
+                <h3 class="text-3xl font-extrabold text-white">Reserva Confirmada Exitosamente</h3>
+                <p class="text-slate-400">Código de Localizador: <strong id="codigo-reserva" class="text-xl text-indigo-400"></strong></p>
+                <p class="text-sm text-slate-500">Toda la documentación y datos de contacto han sido sincronizados en el servidor central.</p>
+                <button onclick="mostrarSeccion('inicio')" class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-semibold mt-4">Volver al Inicio</button>
             </div>
         </section>
 
         <!-- VIAJE A MEDIDA -->
         <section id="seccion-medida" class="hidden space-y-8 max-w-3xl mx-auto">
-            <div class="bg-white rounded-2xl shadow-xl p-8 border space-y-6">
-                <div class="border-b pb-4">
-                    <h2 class="text-2xl font-black text-indigo-900">🗺️ Diseña tu Viaje a Medida</h2>
+            <div class="bg-slate-950 border border-slate-800 rounded-3xl p-10 shadow-xl space-y-6">
+                <div class="border-b border-slate-800 pb-5">
+                    <h2 class="text-2xl font-bold text-white">🗺️ Solicitud de Viaje a Medida</h2>
                 </div>
-                <form onsubmit="handleSolicitarViajeMedida(event)" class="space-y-4">
+                <form onsubmit="handleSolicitarViajeMedida(event)" class="space-y-5">
                     <div>
-                        <label class="block text-sm font-semibold mb-1">¿Qué destino deseas visitar?</label>
-                        <textarea id="medida-peticion" rows="3" required class="w-full border rounded-xl px-4 py-3 outline-none" placeholder="Ej. Roma 4 días..."></textarea>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Destino e Itinerario Deseado:</label>
+                        <textarea id="medida-peticion" rows="3" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none" placeholder="Ej. Escapada cultural a Tokio de 7 días..."></textarea>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                         <div>
-                            <label class="block text-sm font-semibold mb-1">Presupuesto (€)</label>
-                            <input type="number" id="medida-presupuesto" value="600" required class="w-full border rounded-xl px-4 py-3 outline-none">
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Presupuesto (€)</label>
+                            <input type="number" id="medida-presupuesto" value="600" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100">
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold mb-1">Pasajeros</label>
-                            <input type="number" id="medida-pasajeros" value="2" required class="w-full border rounded-xl px-4 py-3 outline-none">
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Pasajeros</label>
+                            <input type="number" id="medida-pasajeros" value="2" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100">
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold mb-1">Fecha Salida</label>
-                            <input type="date" id="medida-salida" required class="w-full border rounded-xl px-4 py-3 outline-none">
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Fecha Salida</label>
+                            <input type="date" id="medida-salida" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100">
                         </div>
                     </div>
                     <div>
-                        <label class="block text-sm font-semibold mb-1">Fecha Regreso</label>
-                        <input type="date" id="medida-regreso" required class="w-full border rounded-xl px-4 py-3 outline-none">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Fecha Regreso</label>
+                        <input type="date" id="medida-regreso" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100">
                     </div>
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition">Solicitar Propuesta</button>
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-4 rounded-xl shadow-lg transition">Solicitar Propuesta Ejecutiva</button>
                 </form>
             </div>
         </section>
 
         <!-- CONTÁCTANOS -->
         <section id="seccion-contacto" class="hidden space-y-8 max-w-2xl mx-auto">
-            <div class="bg-white rounded-2xl shadow-xl p-8 border space-y-6">
-                <h2 class="text-2xl font-black text-indigo-900">📞 Contáctanos</h2>
-                <div class="space-y-4 bg-slate-50 p-6 rounded-xl">
-                    <p><strong>📍 Oficina Central:</strong> Donostia-San Sebastián, Gipuzkoa</p>
-                    <p><strong>📧 Correo:</strong> soporte@blindtravel.com</p>
+            <div class="bg-slate-950 border border-slate-800 rounded-3xl p-10 shadow-xl space-y-6">
+                <h2 class="text-2xl font-bold text-white">📞 Centro de Atención Ejecutiva</h2>
+                <div class="space-y-4 bg-slate-900 border border-slate-800 p-6 rounded-2xl text-slate-300">
+                    <p><strong>📍 Sede Central:</strong> Donostia-San Sebastián, Gipuzkoa</p>
+                    <p><strong>📧 Soporte Técnico:</strong> soporte@blindtravel.com</p>
+                    <p><strong>📱 Línea Directa:</strong> +34 943 00 00 00</p>
                 </div>
             </div>
         </section>
 
         <!-- 🔒 SECCIÓN DESARROLLADOR -->
         <section id="seccion-desarrollador" class="hidden space-y-8 max-w-7xl mx-auto">
-            <div id="dev-login-box" class="bg-white rounded-2xl shadow-xl p-8 max-w-md mx-auto border space-y-4">
-                <h3 class="text-2xl font-black text-amber-600 text-center">🔐 Acceso Desarrollador</h3>
-                <form onsubmit="verificarDevLogin(event)" class="space-y-3">
+            <div id="dev-login-box" class="bg-slate-950 border border-slate-800 rounded-3xl p-10 max-w-md mx-auto shadow-xl space-y-5">
+                <h3 class="text-2xl font-bold text-amber-400 text-center">🔐 Acceso Administrativo</h3>
+                <form onsubmit="verificarDevLogin(event)" class="space-y-4">
                     <div>
-                        <label class="block text-xs font-semibold mb-1">Correo Electrónico</label>
-                        <input type="email" id="dev-email" required class="w-full border rounded-xl px-3 py-2 text-sm outline-none">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Correo Electrónico</label>
+                        <input type="email" id="dev-email" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold mb-1">Contraseña</label>
-                        <input type="password" id="dev-password" required class="w-full border rounded-xl px-3 py-2 text-sm outline-none">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Contraseña</label>
+                        <input type="password" id="dev-password" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none">
                     </div>
-                    <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2.5 rounded-xl shadow transition text-sm">Entrar al Panel</button>
+                    <button type="submit" class="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold py-3 rounded-xl shadow transition text-sm">Autenticarse</button>
                 </form>
-                <p id="dev-error" class="text-xs text-red-600 text-center font-bold"></p>
+                <p id="dev-error" class="text-xs text-red-400 text-center font-bold"></p>
             </div>
 
             <div id="dev-panel-datos" class="hidden space-y-8">
-                <div class="flex justify-between items-center bg-white p-6 rounded-2xl shadow border">
-                    <h2 class="text-2xl font-black text-indigo-900">📊 Panel de Registros, Vuelos y Clientes</h2>
-                    <button onclick="cargarRegistrosDev()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-bold">🔄 Actualizar</button>
+                <div class="flex justify-between items-center bg-slate-950 border border-slate-800 p-6 rounded-2xl shadow-lg">
+                    <h2 class="text-xl font-bold text-white">📊 Panel Ejecutivo: Registros y Logística</h2>
+                    <button onclick="cargarRegistrosDev()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl text-xs font-semibold transition">🔄 Sincronizar Datos</button>
                 </div>
 
                 <!-- Tabla Sorpresa -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 border space-y-4 overflow-x-auto">
-                    <h3 class="text-xl font-bold text-indigo-800">✈️ Viajes Sorpresa (Con Vuelo y Contacto)</h3>
-                    <table class="w-full text-left text-xs border-collapse min-w-[1000px]">
+                <div class="bg-slate-950 border border-slate-800 rounded-3xl p-6 shadow-xl space-y-4 overflow-x-auto">
+                    <h3 class="text-lg font-bold text-indigo-400">✈️ Viajes Sorpresa (Detalle Operativo)</h3>
+                    <table class="w-full text-left text-xs border-collapse min-w-[1050px]">
                         <thead>
-                            <tr class="bg-slate-100 border-b">
-                                <th class="p-2 border">Código</th>
-                                <th class="p-2 border">Titular</th>
-                                <th class="p-2 border">Correo</th>
-                                <th class="p-2 border">Teléfono</th>
-                                <th class="p-2 border">Pax</th>
-                                <th class="p-2 border">Destino Real</th>
-                                <th class="p-2 border">Hotel Asignado</th>
-                                <th class="p-2 border">Vuelo (Compañía, Nº y Hora)</th>
-                                <th class="p-2 border">Total</th>
+                            <tr class="bg-slate-900 border-b border-slate-800 text-slate-400 uppercase tracking-wider">
+                                <th class="p-3 border-b border-slate-800">Código</th>
+                                <th class="p-3 border-b border-slate-800">Titular</th>
+                                <th class="p-3 border-b border-slate-800">Correo</th>
+                                <th class="p-3 border-b border-slate-800">Teléfono</th>
+                                <th class="p-3 border-b border-slate-800">Pax</th>
+                                <th class="p-3 border-b border-slate-800">Destino Real</th>
+                                <th class="p-3 border-b border-slate-800">Hotel Asignado</th>
+                                <th class="p-3 border-b border-slate-800">Vuelo Reservado</th>
+                                <th class="p-3 border-b border-slate-800">Total</th>
                             </tr>
                         </thead>
-                        <tbody id="body-sorpresa"></tbody>
+                        <tbody id="body-sorpresa" class="divide-y divide-slate-800 text-slate-300"></tbody>
                     </table>
                 </div>
 
                 <!-- Tabla Medida -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 border space-y-4 overflow-x-auto">
-                    <h3 class="text-xl font-bold text-indigo-800">🗺️ Viajes a Medida (Con Vuelo y Contacto)</h3>
-                    <table class="w-full text-left text-xs border-collapse min-w-[1000px]">
+                <div class="bg-slate-950 border border-slate-800 rounded-3xl p-6 shadow-xl space-y-4 overflow-x-auto">
+                    <h3 class="text-lg font-bold text-indigo-400">🗺️ Viajes a Medida (Detalle Operativo)</h3>
+                    <table class="w-full text-left text-xs border-collapse min-w-[1050px]">
                         <thead>
-                            <tr class="bg-slate-100 border-b">
-                                <th class="p-2 border">Código</th>
-                                <th class="p-2 border">Titular</th>
-                                <th class="p-2 border">Correo</th>
-                                <th class="p-2 border">Teléfono</th>
-                                <th class="p-2 border">Pax</th>
-                                <th class="p-2 border">Destino</th>
-                                <th class="p-2 border">Hotel Asignado</th>
-                                <th class="p-2 border">Vuelo (Compañía, Nº y Hora)</th>
-                                <th class="p-2 border">Total</th>
+                            <tr class="bg-slate-900 border-b border-slate-800 text-slate-400 uppercase tracking-wider">
+                                <th class="p-3 border-b border-slate-800">Código</th>
+                                <th class="p-3 border-b border-slate-800">Titular</th>
+                                <th class="p-3 border-b border-slate-800">Correo</th>
+                                <th class="p-3 border-b border-slate-800">Teléfono</th>
+                                <th class="p-3 border-b border-slate-800">Pax</th>
+                                <th class="p-3 border-b border-slate-800">Destino</th>
+                                <th class="p-3 border-b border-slate-800">Hotel Asignado</th>
+                                <th class="p-3 border-b border-slate-800">Vuelo Reservado</th>
+                                <th class="p-3 border-b border-slate-800">Total</th>
                             </tr>
                         </thead>
-                        <tbody id="body-medida"></tbody>
+                        <tbody id="body-medida" class="divide-y divide-slate-800 text-slate-300"></tbody>
                     </table>
                 </div>
             </div>
@@ -252,25 +281,26 @@
     </main>
 
     <!-- MODAL AUTH -->
-    <div id="modal-auth" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative space-y-6">
-            <button onclick="cerrarModalAuth()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+    <div id="modal-auth" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-slate-950 border border-slate-800 rounded-3xl shadow-2xl max-w-md w-full p-8 relative space-y-6">
+            <button onclick="cerrarModalAuth()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl font-bold">&times;</button>
             <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
+                <h3 class="text-xl font-bold text-white text-center mb-2">Acceso de Clientes</h3>
                 <div>
-                    <label class="block text-sm font-semibold mb-1">Correo</label>
-                    <input type="email" id="login-email" required class="w-full border rounded-xl px-4 py-3 outline-none">
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Correo</label>
+                    <input type="email" id="login-email" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100">
                 </div>
                 <div>
-                    <label class="block text-sm font-semibold mb-1">Contraseña</label>
-                    <input type="password" id="login-password" required class="w-full border rounded-xl px-4 py-3 outline-none">
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Contraseña</label>
+                    <input type="password" id="login-password" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100">
                 </div>
-                <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-xl">Entrar</button>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 rounded-xl transition">Entrar</button>
             </form>
         </div>
     </div>
 
-    <footer class="bg-slate-900 text-slate-400 text-center py-6 text-sm mt-12">
-        <p>&copy; 2026 BlindTravel - Agencia de Viajes</p>
+    <footer class="bg-slate-950 border-t border-slate-800/80 text-slate-500 text-center py-6 text-xs mt-16">
+        <p>&copy; 2026 BlindTravel Executive Agency. Todos los derechos reservados.</p>
     </footer>
 
     <script>
@@ -281,11 +311,11 @@
             ['inicio', 'sorpresa', 'medida', 'contacto', 'desarrollador'].forEach(s => {
                 document.getElementById(`seccion-${s}`).classList.add('hidden');
                 const navBtn = document.getElementById(`nav-${s}`);
-                if (navBtn && s !== 'desarrollador') navBtn.className = "hover:text-indigo-200 pb-1";
+                if (navBtn && s !== 'desarrollador') navBtn.className = "text-slate-400 hover:text-white pb-1 transition";
             });
             document.getElementById(`seccion-${seccion}`).classList.remove('hidden');
             const activeNav = document.getElementById(`nav-${seccion}`);
-            if (activeNav && seccion !== 'desarrollador') activeNav.className = "hover:text-indigo-200 border-b-2 border-white pb-1 font-bold";
+            if (activeNav && seccion !== 'desarrollador') activeNav.className = "text-white border-b-2 border-indigo-500 pb-1 transition font-semibold";
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -343,15 +373,18 @@
             for (let i = 1; i < lineasCsv.length; i++) {
                 const fila = lineasCsv[i];
                 if (!fila.trim()) continue;
-                const columnas = fila.split(',').map(c => c.replace(/"/g, ''));
-                const tr = document.createElement('tr');
-                tr.className = "border-b hover:bg-slate-50";
+                // Parseo robusto respetando comillas del CSV
+                const columnas = fila.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || fila.split(',');
+                const cLimpio = columnas.map(c => c.replace(/^"|"$/g, '').trim());
                 
-                // Mapeo: Codigo(0), Titular(1), Email(2), Telefono(3), Pax(4), Destino(5), Hotel(6), Vuelo(7), Total(8)
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-900/50 transition";
+                
+                // Mapeo exacto de las 9 columnas: Código(0), Titular(1), Email(2), Teléfono(3), Pax(4), Destino(5), Hotel(6), Vuelo(7), Total(8)
                 [0, 1, 2, 3, 4, 5, 6, 7, 8].forEach(idx => {
                     const td = document.createElement('td');
-                    td.className = "p-2 border text-slate-700";
-                    td.innerText = columnas[idx] || '';
+                    td.className = "p-3 border-b border-slate-800 text-slate-300";
+                    td.innerText = cLimpio[idx] || '';
                     tr.appendChild(td);
                 });
                 tbody.appendChild(tr);

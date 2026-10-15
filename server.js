@@ -14,7 +14,7 @@ if (!fs.existsSync(ARCHIVO_USUARIOS)) {
     fs.writeFileSync(ARCHIVO_USUARIOS, JSON.stringify([]));
 }
 
-// Limpiar archivos de registros antiguos al arrancar para empezar limpios
+// Limpiar registros antiguos para empezar limpios
 ['viajes_sorpresa_desglose.csv', 'viajes_medida_desglose.csv'].forEach(file => {
     if (fs.existsSync(file)) fs.unlinkSync(file);
 });
@@ -56,7 +56,7 @@ app.post('/api/auth/login', (req, res) => {
     }
 });
 
-// MOTOR DE INTELIGENCIA DE VIAJES CON DATOS DETALLADOS DE VUELO
+// MOTOR DE INTELIGENCIA DE VIAJES EXECUTIVO
 function procesarIAViaje(peticion, presupuesto) {
     const txt = (peticion || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     const pres = parseInt(presupuesto || 450, 10);
@@ -72,7 +72,7 @@ function procesarIAViaje(peticion, presupuesto) {
         if (esLujoPresupuestoAlto) {
             resultado = {
                 destino: "Bora Bora & Tahití, Polinesia Francesa",
-                vueloInfo: "Air Tahiti Nui (Vuelo TN-072 - Salida 06:40h)",
+                vueloInfo: "Air Tahiti Nui (TN-072 - 06:40h)",
                 hotelNombre: "Overwater Villa Resort 5* Deluxe",
                 actividadesTexto: "Navegación privada en catamarán y baño con mantarrayas.",
                 pistas: ["Atolones de coral paradisíacos y bungalows sobre aguas turquesas."],
@@ -82,7 +82,7 @@ function procesarIAViaje(peticion, presupuesto) {
         } else {
             resultado = {
                 destino: "Santorini & Islas Cícladas, Grecia",
-                vueloInfo: "Aegean Airlines (Vuelo A3-752 - Salida 07:10h)",
+                vueloInfo: "Aegean Airlines (A3-752 - 07:10h)",
                 hotelNombre: "Caldera Premium Villas 4*",
                 actividadesTexto: "Paseo en velero al atardecer y cata de vinos.",
                 pistas: ["Casitas blancas con cúpulas azules sobre el mar Egeo."],
@@ -93,7 +93,7 @@ function procesarIAViaje(peticion, presupuesto) {
     } else if (esFrioONieve) {
         resultado = {
             destino: "Ginebra & Alpes Suizos, Suiza",
-            vueloInfo: "Swiss Air (Vuelo LX-2064 - Salida 07:15h)",
+            vueloInfo: "Swiss Air (LX-2064 - 07:15h)",
             hotelNombre: "Alpine Lodge & Thermal Spa Resort 5*",
             actividadesTexto: "Pase VIP de montaña y acceso privado a baños termales.",
             pistas: ["Majestuosos picos alpinos, lagos helados y estaciones de esquí."],
@@ -103,7 +103,7 @@ function procesarIAViaje(peticion, presupuesto) {
     } else if (esAsiaOExotico) {
         resultado = {
             destino: "Tokio & Kioto, Japón",
-            vueloInfo: "Qatar Airways (Vuelo QR-148 - Salida 14:15h)",
+            vueloInfo: "Qatar Airways (QR-148 - 14:15h)",
             hotelNombre: "Hotel Gracery Shinjuku & Ryokan Tradicional 5*",
             actividadesTexto: "Pase Shinkansen, entradas a teamLab Planets y ceremonias.",
             pistas: ["Fusión única de tecnología futurista y cultura ancestral."],
@@ -114,7 +114,7 @@ function procesarIAViaje(peticion, presupuesto) {
         if (esLujoPresupuestoAlto) {
             resultado = {
                 destino: "Nueva York, Estados Unidos",
-                vueloInfo: "Delta Air Lines (Vuelo DL-418 - Salida 08:30h)",
+                vueloInfo: "Delta Air Lines (DL-418 - 08:30h)",
                 hotelNombre: "The Plaza Hotel Fifth Avenue (Manhattan)",
                 actividadesTexto: "Vuelo en helicóptero sobre Manhattan y Broadway VIP.",
                 pistas: ["La gran metrópoli mundial repleta de rascacielos icónicos."],
@@ -124,7 +124,7 @@ function procesarIAViaje(peticion, presupuesto) {
         } else {
             resultado = {
                 destino: "París, Francia",
-                vueloInfo: "Air France (Vuelo AF-1240 - Salida 10:30h)",
+                vueloInfo: "Air France (AF-1240 - 10:30h)",
                 hotelNombre: "Le Meurice Palace (Junto a Tullerías)",
                 actividadesTexto: "Cena privada en crucero por el Sena y Louvre prioritario.",
                 pistas: ["Capital mundial del arte, la moda y monumentos imperiales."],
@@ -139,23 +139,10 @@ function procesarIAViaje(peticion, presupuesto) {
 function calcularDesgloseFinanciero(presupuestoUnitario, pasajeros, vueloBase, hotelBase) {
     const totalPers = presupuestoUnitario || 450;
     const totalPax = pasajeros || 1;
-
     let costeVuelo = Math.min(vueloBase || 150, Math.round(totalPers * 0.35));
     let costeHotel = Math.min(hotelBase || 250, Math.round(totalPers * 0.40));
-    let restante = totalPers - (costeVuelo + costeHotel);
-
-    let actividades = Math.max(30, Math.round(restante * 0.45));
-    let comida = Math.max(30, Math.round(restante * 0.35));
-    let seguro = Math.max(15, totalPers - (costeVuelo + costeHotel + actividades + comida));
-
-    return {
-        vuelo: (costeVuelo * totalPax) + '€',
-        hotel: (costeHotel * totalPax) + '€',
-        actividades: (actividades * totalPax) + '€',
-        comida: (comida * totalPax) + '€',
-        seguro: (seguro * totalPax) + '€',
-        total: (totalPers * totalPax) + '€'
-    };
+    let totalFinal = totalPers * totalPax;
+    return { total: totalFinal + '€' };
 }
 
 app.post('/api/viaje', async (req, res) => {
@@ -204,7 +191,8 @@ app.post('/api/pagar', (req, res) => {
         if (!fs.existsSync(archivoCsv)) {
             fs.writeFileSync(archivoCsv, `"CodigoReserva","Titular","Email","Telefono","Pasajeros","Destino","Hotel","Vuelo","Total"\n`);
         }
-        fs.appendFileSync(archivoCsv, `"${codigoReserva}","${titular || 'Anónimo'}","${emailCliente || 'N/A'}","${telefonoCliente || 'N/A'}","${numPasajeros}","${destino}","${hotelInfo || ''}","${vueloInfo || 'Vuelo Directo'}","${desglose.total}"\n`);
+        // Orden estricto de columnas para evitar desajustes
+        fs.appendFileSync(archivoCsv, `"${codigoReserva}","${titular || 'Anónimo'}","${emailCliente || 'N/A'}","${telefonoCliente || 'N/A'}","${numPasajeros}","${destino}","${hotelInfo || ''}","${vueloInfo || 'Directo'}","${desglose.total}"\n`);
 
         console.log(`✅ Pago procesado y registrado: ${codigoReserva}`);
         res.json({ exito: true, codigoReserva });
