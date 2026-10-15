@@ -186,7 +186,7 @@ app.post('/api/viaje', async (req, res) => {
 
 app.post('/api/pagar', (req, res) => {
     try {
-        const { titular, importe, destino, tipoViaje, pasajeros, costeVueloBase, costeHotelBase, vueloInfo, hotelInfo } = req.body;
+        const { titular, emailCliente, telefonoCliente, importe, destino, tipoViaje, pasajeros, costeVueloBase, costeHotelBase, hotelInfo } = req.body;
         const codigoReserva = 'BT-' + Math.floor(100000 + Math.random() * 900000);
 
         const numPasajeros = parseInt(pasajeros || 1, 10);
@@ -197,11 +197,11 @@ app.post('/api/pagar', (req, res) => {
 
         const archivoCsv = tipoViaje === 'sorpresa' ? 'viajes_sorpresa_desglose.csv' : 'viajes_medida_desglose.csv';
         if (!fs.existsSync(archivoCsv)) {
-            fs.writeFileSync(archivoCsv, `"CodigoReserva","Titular","Pasajeros","Destino","Hotel_Nombre","Vuelo_Avion","Hotel_Alojamiento","Actividades","Comida","Seguro_Traslados","Total"\n`);
+            fs.writeFileSync(archivoCsv, `"CodigoReserva","Titular","Email","Telefono","Pasajeros","Destino","Hotel_Nombre","Vuelo_Avion","Hotel_Alojamiento","Actividades","Comida","Seguro_Traslados","Total"\n`);
         }
-        fs.appendFileSync(archivoCsv, `"${codigoReserva}","${titular || 'Anónimo'}","${numPasajeros}","${destino}","${hotelInfo || ''}","${desglose.vuelo}","${desglose.hotel}","${desglose.actividades}","${desglose.comida}","${desglose.seguro}","${desglose.total}"\n`);
+        fs.appendFileSync(archivoCsv, `"${codigoReserva}","${titular || 'Anónimo'}","${emailCliente || 'No indicado'}","${telefonoCliente || 'No indicado'}","${numPasajeros}","${destino}","${hotelInfo || ''}","${desglose.vuelo}","${desglose.hotel}","${desglose.actividades}","${desglose.comida}","${desglose.seguro}","${desglose.total}"\n`);
 
-        console.log(`✅ Pago procesado y registrado: ${codigoReserva}`);
+        console.log(`✅ Pago procesado y registrado con contacto: ${codigoReserva}`);
         res.json({ exito: true, codigoReserva });
     } catch (err) {
         res.status(500).json({ exito: false, mensaje: err.message });

@@ -88,25 +88,38 @@
                     <p class="text-xl font-black text-emerald-700 pt-3">Precio Estimado: <span id="res-precio"></span></p>
                 </div>
 
-                <!-- PAGO -->
+                <!-- PAGO CON CONTACTO -->
                 <div class="border-t pt-6">
-                    <h4 class="font-bold text-lg mb-4">💳 Confirmar Reserva y Pago</h4>
+                    <h4 class="font-bold text-lg mb-4">💳 Datos de Contacto y Pago</h4>
                     <form onsubmit="handlePagar(event)" class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium mb-1">Titular de la Tarjeta</label>
-                            <input type="text" id="pago-titular" required class="w-full border rounded-xl px-4 py-3 outline-none" placeholder="Nombre completo">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Titular de la Tarjeta</label>
+                                <input type="text" id="pago-titular" required class="w-full border rounded-xl px-4 py-3 outline-none" placeholder="Nombre completo">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Correo Electrónico (Contacto)</label>
+                                <input type="email" id="pago-email" required class="w-full border rounded-xl px-4 py-3 outline-none" placeholder="cliente@correo.com">
+                            </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1">Teléfono Móvil</label>
+                                <input type="tel" id="pago-telefono" required class="w-full border rounded-xl px-4 py-3 outline-none" placeholder="+34 600000000">
+                            </div>
                             <div class="md:col-span-2">
                                 <label class="block text-sm font-medium mb-1">Número de Tarjeta</label>
                                 <input type="text" id="pago-tarjeta" required maxlength="19" class="w-full border rounded-xl px-4 py-3 outline-none" placeholder="1234 5678 9101 1121">
                             </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-sm font-medium mb-1">Caducidad / CVC</label>
-                                <div class="flex gap-2">
-                                    <input type="text" id="pago-exp" required placeholder="MM/AA" maxlength="5" class="w-1/2 border rounded-xl px-2 py-3 text-center outline-none">
-                                    <input type="text" id="pago-cvc" required placeholder="CVC" maxlength="4" class="w-1/2 border rounded-xl px-2 py-3 text-center outline-none">
-                                </div>
+                                <label class="block text-sm font-medium mb-1">Caducidad</label>
+                                <input type="text" id="pago-exp" required placeholder="MM/AA" maxlength="5" class="w-full border rounded-xl px-4 py-3 text-center outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1">CVC</label>
+                                <input type="text" id="pago-cvc" required placeholder="CVC" maxlength="4" class="w-full border rounded-xl px-4 py-3 text-center outline-none">
                             </div>
                         </div>
                         <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition">Pagar y Guardar Reserva</button>
@@ -118,7 +131,7 @@
             <div id="exito-reserva" class="bg-emerald-50 border border-emerald-200 text-emerald-800 p-8 rounded-2xl shadow-xl hidden text-center space-y-4">
                 <h3 class="text-3xl font-black">🎉 ¡Reserva Confirmada con Éxito!</h3>
                 <p>Código de Reserva: <strong id="codigo-reserva" class="text-2xl"></strong></p>
-                <p class="text-sm">Tus datos han sido registrados correctamente en el sistema de gestión.</p>
+                <p class="text-sm">Tus datos y contacto han quedado guardados en el sistema de gestión.</p>
                 <button onclick="mostrarSeccion('inicio')" class="bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold">Volver al Inicio</button>
             </div>
         </section>
@@ -168,12 +181,10 @@
             </div>
         </section>
 
-        <!-- 🔒 SECCIÓN DESARROLLADOR (EXCLUSIVA) -->
-        <section id="seccion-desarrollador" class="hidden space-y-8 max-w-5xl mx-auto">
-            <!-- Login de Desarrollador -->
+        <!-- 🔒 SECCIÓN DESARROLLADOR -->
+        <section id="seccion-desarrollador" class="hidden space-y-8 max-w-6xl mx-auto">
             <div id="dev-login-box" class="bg-white rounded-2xl shadow-xl p-8 max-w-md mx-auto border space-y-4">
                 <h3 class="text-2xl font-black text-amber-600 text-center">🔐 Acceso Desarrollador</h3>
-                <p class="text-xs text-slate-500 text-center">Introduce tus credenciales de administrador para ver los registros del sistema.</p>
                 <form onsubmit="verificarDevLogin(event)" class="space-y-3">
                     <div>
                         <label class="block text-xs font-semibold mb-1">Correo Electrónico</label>
@@ -188,61 +199,50 @@
                 <p id="dev-error" class="text-xs text-red-600 text-center font-bold"></p>
             </div>
 
-            <!-- Panel de Registros (Oculto hasta autenticarse) -->
             <div id="dev-panel-datos" class="hidden space-y-8">
                 <div class="flex justify-between items-center bg-white p-6 rounded-2xl shadow border">
-                    <h2 class="text-2xl font-black text-indigo-900">📊 Panel de Control y Registros (Desarrollador)</h2>
-                    <button onclick="cargarRegistrosDev()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-bold">🔄 Actualizar Datos</button>
+                    <h2 class="text-2xl font-black text-indigo-900">📊 Panel de Registros y Contacto de Clientes</h2>
+                    <button onclick="cargarRegistrosDev()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-bold">🔄 Actualizar</button>
                 </div>
 
-                <!-- Tabla Viajes Sorpresa -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 border space-y-4">
-                    <h3 class="text-xl font-bold text-indigo-800">✈️ Desglose de Viajes Sorpresa Registrados</h3>
-                    <div class="overflow-x-auto">
-                        <table id="tabla-sorpresa" class="w-full text-left text-xs border-collapse">
-                            <thead>
-                                <tr class="bg-slate-100 border-b">
-                                    <th class="p-2 border">Código</th>
-                                    <th class="p-2 border">Titular</th>
-                                    <th class="p-2 border">Pax</th>
-                                    <th class="p-2 border">Destino Real</th>
-                                    <th class="p-2 border">Hotel Asignado</th>
-                                    <th class="p-2 border">Vuelo</th>
-                                    <th class="p-2 border">Hotel (€)</th>
-                                    <th class="p-2 border">Actividades</th>
-                                    <th class="p-2 border">Comida</th>
-                                    <th class="p-2 border">Seguro</th>
-                                    <th class="p-2 border">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody id="body-sorpresa"></tbody>
-                        </table>
-                    </div>
+                <!-- Tabla Sorpresa -->
+                <div class="bg-white rounded-2xl shadow-xl p-6 border space-y-4 overflow-x-auto">
+                    <h3 class="text-xl font-bold text-indigo-800">✈️ Viajes Sorpresa (Con Contacto de Cliente)</h3>
+                    <table class="w-full text-left text-xs border-collapse min-w-[900px]">
+                        <thead>
+                            <tr class="bg-slate-100 border-b">
+                                <th class="p-2 border">Código</th>
+                                <th class="p-2 border">Titular</th>
+                                <th class="p-2 border">Correo</th>
+                                <th class="p-2 border">Teléfono</th>
+                                <th class="p-2 border">Pax</th>
+                                <th class="p-2 border">Destino Real</th>
+                                <th class="p-2 border">Hotel Asignado</th>
+                                <th class="p-2 border">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="body-sorpresa"></tbody>
+                    </table>
                 </div>
 
-                <!-- Tabla Viajes a Medida -->
-                <div class="bg-white rounded-2xl shadow-xl p-6 border space-y-4">
-                    <h3 class="text-xl font-bold text-indigo-800">🗺️ Desglose de Viajes a Medida Registrados</h3>
-                    <div class="overflow-x-auto">
-                        <table id="tabla-medida" class="w-full text-left text-xs border-collapse">
-                            <thead>
-                                <tr class="bg-slate-100 border-b">
-                                    <th class="p-2 border">Código</th>
-                                    <th class="p-2 border">Titular</th>
-                                    <th class="p-2 border">Pax</th>
-                                    <th class="p-2 border">Destino</th>
-                                    <th class="p-2 border">Hotel Asignado</th>
-                                    <th class="p-2 border">Vuelo</th>
-                                    <th class="p-2 border">Hotel (€)</th>
-                                    <th class="p-2 border">Actividades</th>
-                                    <th class="p-2 border">Comida</th>
-                                    <th class="p-2 border">Seguro</th>
-                                    <th class="p-2 border">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody id="body-medida"></tbody>
-                        </table>
-                    </div>
+                <!-- Tabla Medida -->
+                <div class="bg-white rounded-2xl shadow-xl p-6 border space-y-4 overflow-x-auto">
+                    <h3 class="text-xl font-bold text-indigo-800">🗺️ Viajes a Medida (Con Contacto de Cliente)</h3>
+                    <table class="w-full text-left text-xs border-collapse min-w-[900px]">
+                        <thead>
+                            <tr class="bg-slate-100 border-b">
+                                <th class="p-2 border">Código</th>
+                                <th class="p-2 border">Titular</th>
+                                <th class="p-2 border">Correo</th>
+                                <th class="p-2 border">Teléfono</th>
+                                <th class="p-2 border">Pax</th>
+                                <th class="p-2 border">Destino</th>
+                                <th class="p-2 border">Hotel Asignado</th>
+                                <th class="p-2 border">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="body-medida"></tbody>
+                    </table>
                 </div>
             </div>
         </section>
@@ -253,19 +253,17 @@
     <div id="modal-auth" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-50 p-4">
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative space-y-6">
             <button onclick="cerrarModalAuth()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
-            <div id="auth-panel-no-logueado">
-                <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-semibold mb-1">Correo</label>
-                        <input type="email" id="login-email" required class="w-full border rounded-xl px-4 py-3 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold mb-1">Contraseña</label>
-                        <input type="password" id="login-password" required class="w-full border rounded-xl px-4 py-3 outline-none">
-                    </div>
-                    <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-xl">Entrar</button>
-                </form>
-            </div>
+            <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Correo</label>
+                    <input type="email" id="login-email" required class="w-full border rounded-xl px-4 py-3 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Contraseña</label>
+                    <input type="password" id="login-password" required class="w-full border rounded-xl px-4 py-3 outline-none">
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-xl">Entrar</button>
+            </form>
         </div>
     </div>
 
@@ -306,6 +304,7 @@
                 if (data.exito) {
                     usuarioActual = data.usuario;
                     document.getElementById('pago-titular').value = usuarioActual.nombre;
+                    document.getElementById('pago-email').value = usuarioActual.email;
                     cerrarModalAuth();
                 } else { alert(data.mensaje); }
             } catch (err) { alert("Error de conexión."); }
@@ -321,7 +320,7 @@
                 document.getElementById('dev-panel-datos').classList.remove('hidden');
                 cargarRegistrosDev();
             } else {
-                document.getElementById('dev-error').innerText = "Credenciales de desarrollador incorrectas.";
+                document.getElementById('dev-error').innerText = "Credenciales incorrectas.";
             }
         }
 
@@ -339,17 +338,19 @@
         function llenarTabla(bodyId, lineasCsv) {
             const tbody = document.getElementById(bodyId);
             tbody.innerHTML = '';
-            // Omitir la primera línea (cabecera del csv)
             for (let i = 1; i < lineasCsv.length; i++) {
                 const fila = lineasCsv[i];
                 if (!fila.trim()) continue;
                 const columnas = fila.split(',').map(c => c.replace(/"/g, ''));
                 const tr = document.createElement('tr');
                 tr.className = "border-b hover:bg-slate-50";
-                columnas.forEach(col => {
+                
+                // Mostrar celdas clave (Codigo, Titular, Email, Telefono, Pax, Destino, Hotel, Total)
+                const indicesAVisualizar = [0, 1, 2, 3, 4, 5, 6, 12];
+                indicesAVisualizar.forEach(idx => {
                     const td = document.createElement('td');
                     td.className = "p-2 border text-slate-700";
-                    td.innerText = col;
+                    td.innerText = columnas[idx] || '';
                     tr.appendChild(td);
                 });
                 tbody.appendChild(tr);
@@ -425,16 +426,19 @@
             if (!datosUltimoViaje) return;
 
             const titular = document.getElementById('pago-titular').value;
+            const emailCliente = document.getElementById('pago-email').value;
+            const telefonoCliente = document.getElementById('pago-telefono').value;
 
             const payload = {
                 titular,
+                emailCliente,
+                telefonoCliente,
                 importe: datosUltimoViaje.precioEstimado,
                 destino: datosUltimoViaje.destinoRealInterno,
                 tipoViaje: datosUltimoViaje.tipoViaje,
                 pasajeros: datosUltimoViaje.pasajeros,
                 costeVueloBase: datosUltimoViaje.costeVueloBase,
                 costeHotelBase: datosUltimoViaje.costeHotelBase,
-                vueloInfo: datosUltimoViaje.vueloInfo,
                 hotelInfo: datosUltimoViaje.hotelInfo
             };
 
