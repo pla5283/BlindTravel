@@ -17,6 +17,7 @@
                 <button onclick="mostrarSeccion('sorpresa')" id="nav-sorpresa" class="hover:text-indigo-200 pb-1">Viaje Sorpresa</button>
                 <button onclick="mostrarSeccion('medida')" id="nav-medida" class="hover:text-indigo-200 pb-1">Viaje a Medida</button>
                 <button onclick="mostrarSeccion('contacto')" id="nav-contacto" class="hover:text-indigo-200 pb-1">Contáctanos</button>
+                <button onclick="mostrarSeccion('desarrollador')" id="nav-desarrollador" class="hover:text-amber-300 pb-1 text-amber-200 font-bold">🔒 Desarrollador</button>
             </nav>
             <button onclick="abrirModalAuth()" id="btn-nav-auth" class="bg-white text-indigo-700 font-bold px-4 py-2 rounded-lg shadow hover:bg-indigo-50">Iniciar Sesión</button>
         </div>
@@ -35,25 +36,6 @@
                     <button onclick="mostrarSeccion('medida')" class="bg-white text-indigo-700 hover:bg-slate-100 font-bold px-8 py-3.5 rounded-xl shadow-lg transition text-lg">Diseñar a Medida</button>
                 </div>
             </div>
-
-            <!-- Ventajas -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-2xl shadow-md border space-y-3">
-                    <div class="text-3xl">🎯</div>
-                    <h3 class="text-xl font-bold">100% Sorpresa y Emoción</h3>
-                    <p class="text-slate-600 text-sm">Tu destino se mantiene en secreto. Te daremos únicamente pistas y detalles del equipaje para mantener la intriga.</p>
-                </div>
-                <div class="bg-white p-8 rounded-2xl shadow-md border space-y-3">
-                    <div class="text-3xl">🏨</div>
-                    <h3 class="text-xl font-bold">Calidad Garantizada</h3>
-                    <p class="text-slate-600 text-sm">Alojamientos céntricos de alta categoría y vuelos directos o con escalas óptimas coordinadas con aerolíneas principales.</p>
-                </div>
-                <div class="bg-white p-8 rounded-2xl shadow-md border space-y-3">
-                    <div class="text-3xl">💼</div>
-                    <h3 class="text-xl font-bold">Gestión Transparente</h3>
-                    <p class="text-slate-600 text-sm">Servicio profesional completo con seguro de viaje y atención personalizada desde Gipuzkoa.</p>
-                </div>
-            </div>
         </section>
 
         <!-- VIAJE SORPRESA -->
@@ -61,13 +43,13 @@
             <div class="bg-white rounded-2xl shadow-xl p-8 border space-y-6">
                 <div class="border-b pb-4">
                     <h2 class="text-2xl font-black text-indigo-900">✈️ Planifica tu Viaje Sorpresa</h2>
-                    <p class="text-slate-500 text-sm">Indica tus gustos y deja que el equipo de BlindTravel organice tu experiencia.</p>
+                    <p class="text-slate-500 text-sm">Indica tus gustos y deja que el equipo organice tu experiencia.</p>
                 </div>
 
                 <form onsubmit="handleSolicitarViaje(event)" class="space-y-4">
                     <div>
                         <label class="block text-sm font-semibold mb-1">Restricciones / Pistas / Preferencias:</label>
-                        <textarea id="viaje-peticion" rows="3" required class="w-full border rounded-xl px-4 py-3 outline-none" placeholder="Ej. Me gustaría cultura, historia y buena gastronomía..."></textarea>
+                        <textarea id="viaje-peticion" rows="3" required class="w-full border rounded-xl px-4 py-3 outline-none" placeholder="Ej. Isla con mucho mar, tranquilidad..."></textarea>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
@@ -91,13 +73,13 @@
                 </form>
             </div>
 
-            <!-- RESULTADO PÚBLICO (MANTIENE EL SECRETO) -->
+            <!-- RESULTADO PÚBLICO -->
             <div id="resultado-seccion" class="bg-white rounded-2xl shadow-xl p-8 hidden space-y-6 border">
                 <h3 id="res-titulo" class="text-2xl font-black text-indigo-900"></h3>
                 <div class="bg-indigo-50 p-6 rounded-xl space-y-3 text-sm">
                     <p class="text-base"><strong>Destino Asignado:</strong> <span id="res-destino" class="font-bold text-indigo-700">--------------- (Oculto hasta el aeropuerto)</span></p>
                     <p><strong>Origen de Salida:</strong> <span id="res-origen">Donostia-San Sebastián / Bilbao (BIO)</span></p>
-                    <p><strong>Duración Estimada del Vuelo:</strong> <span id="res-tiempo">~2h - 3h de vuelo</span></p>
+                    <p><strong>Duración Estimada del Vuelo:</strong> <span id="res-tiempo"></span></p>
                     <p><strong>Equipaje Recomendado:</strong> <span id="res-equipaje"></span></p>
                     <div id="bloque-pistas" class="pt-2">
                         <strong class="block mb-1">Pistas del Destino:</strong>
@@ -106,18 +88,18 @@
                     <p class="text-xl font-black text-emerald-700 pt-3">Precio Estimado: <span id="res-precio"></span></p>
                 </div>
 
-                <!-- PAGO REAL / SIMULADO MÚLTIPLE CAMPO -->
+                <!-- PAGO -->
                 <div class="border-t pt-6">
                     <h4 class="font-bold text-lg mb-4">💳 Confirmar Reserva y Pago</h4>
                     <form onsubmit="handlePagar(event)" class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium mb-1">Titular de la Tarjeta</label>
-                            <input type="text" id="pago-titular" required class="w-full border rounded-xl px-4 py-3 outline-none" placeholder="Nombre completo del titular">
+                            <input type="text" id="pago-titular" required class="w-full border rounded-xl px-4 py-3 outline-none" placeholder="Nombre completo">
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="md:col-span-2">
                                 <label class="block text-sm font-medium mb-1">Número de Tarjeta</label>
-                                <input type="text" id="pago-tarjeta" required pattern="[0-9]{13,19}" maxlength="19" class="w-full border rounded-xl px-4 py-3 outline-none" placeholder="1234 5678 9101 1121">
+                                <input type="text" id="pago-tarjeta" required maxlength="19" class="w-full border rounded-xl px-4 py-3 outline-none" placeholder="1234 5678 9101 1121">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-1">Caducidad / CVC</label>
@@ -136,7 +118,7 @@
             <div id="exito-reserva" class="bg-emerald-50 border border-emerald-200 text-emerald-800 p-8 rounded-2xl shadow-xl hidden text-center space-y-4">
                 <h3 class="text-3xl font-black">🎉 ¡Reserva Confirmada con Éxito!</h3>
                 <p>Código de Reserva: <strong id="codigo-reserva" class="text-2xl"></strong></p>
-                <p class="text-sm">Tus vuelos, hotel de alta calidad y seguro han sido procesados. Recibirás tus tarjetas de embarque 48h antes del viaje.</p>
+                <p class="text-sm">Tus datos han sido registrados correctamente en el sistema de gestión.</p>
                 <button onclick="mostrarSeccion('inicio')" class="bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold">Volver al Inicio</button>
             </div>
         </section>
@@ -146,21 +128,20 @@
             <div class="bg-white rounded-2xl shadow-xl p-8 border space-y-6">
                 <div class="border-b pb-4">
                     <h2 class="text-2xl font-black text-indigo-900">🗺️ Diseña tu Viaje a Medida</h2>
-                    <p class="text-slate-500 text-sm">Dinos exactamente qué lugar quieres visitar.</p>
                 </div>
                 <form onsubmit="handleSolicitarViajeMedida(event)" class="space-y-4">
                     <div>
                         <label class="block text-sm font-semibold mb-1">¿Qué destino deseas visitar?</label>
-                        <textarea id="medida-peticion" rows="3" required class="w-full border rounded-xl px-4 py-3 outline-none" placeholder="Ej. Escapada a Roma de 4 días para 4 personas..."></textarea>
+                        <textarea id="medida-peticion" rows="3" required class="w-full border rounded-xl px-4 py-3 outline-none" placeholder="Ej. Roma 4 días..."></textarea>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
-                            <label class="block text-sm font-semibold mb-1">Presupuesto por persona (€)</label>
-                            <input type="number" id="medida-presupuesto" value="600" min="200" required class="w-full border rounded-xl px-4 py-3 outline-none">
+                            <label class="block text-sm font-semibold mb-1">Presupuesto (€)</label>
+                            <input type="number" id="medida-presupuesto" value="600" required class="w-full border rounded-xl px-4 py-3 outline-none">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold mb-1">Pasajeros</label>
-                            <input type="number" id="medida-pasajeros" value="2" min="1" max="10" required class="w-full border rounded-xl px-4 py-3 outline-none">
+                            <input type="number" id="medida-pasajeros" value="2" required class="w-full border rounded-xl px-4 py-3 outline-none">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold mb-1">Fecha Salida</label>
@@ -171,7 +152,7 @@
                         <label class="block text-sm font-semibold mb-1">Fecha Regreso</label>
                         <input type="date" id="medida-regreso" required class="w-full border rounded-xl px-4 py-3 outline-none">
                     </div>
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition">Solicitar Propuesta a Medida</button>
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition">Solicitar Propuesta</button>
                 </form>
             </div>
         </section>
@@ -182,8 +163,86 @@
                 <h2 class="text-2xl font-black text-indigo-900">📞 Contáctanos</h2>
                 <div class="space-y-4 bg-slate-50 p-6 rounded-xl">
                     <p><strong>📍 Oficina Central:</strong> Donostia-San Sebastián, Gipuzkoa</p>
-                    <p><strong>📧 Correo Electrónico:</strong> soporte@blindtravel.com</p>
-                    <p><strong>📱 Teléfono:</strong> +34 943 00 00 00</p>
+                    <p><strong>📧 Correo:</strong> soporte@blindtravel.com</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🔒 SECCIÓN DESARROLLADOR (EXCLUSIVA) -->
+        <section id="seccion-desarrollador" class="hidden space-y-8 max-w-5xl mx-auto">
+            <!-- Login de Desarrollador -->
+            <div id="dev-login-box" class="bg-white rounded-2xl shadow-xl p-8 max-w-md mx-auto border space-y-4">
+                <h3 class="text-2xl font-black text-amber-600 text-center">🔐 Acceso Desarrollador</h3>
+                <p class="text-xs text-slate-500 text-center">Introduce tus credenciales de administrador para ver los registros del sistema.</p>
+                <form onsubmit="verificarDevLogin(event)" class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Correo Electrónico</label>
+                        <input type="email" id="dev-email" required class="w-full border rounded-xl px-3 py-2 text-sm outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Contraseña</label>
+                        <input type="password" id="dev-password" required class="w-full border rounded-xl px-3 py-2 text-sm outline-none">
+                    </div>
+                    <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2.5 rounded-xl shadow transition text-sm">Entrar al Panel</button>
+                </form>
+                <p id="dev-error" class="text-xs text-red-600 text-center font-bold"></p>
+            </div>
+
+            <!-- Panel de Registros (Oculto hasta autenticarse) -->
+            <div id="dev-panel-datos" class="hidden space-y-8">
+                <div class="flex justify-between items-center bg-white p-6 rounded-2xl shadow border">
+                    <h2 class="text-2xl font-black text-indigo-900">📊 Panel de Control y Registros (Desarrollador)</h2>
+                    <button onclick="cargarRegistrosDev()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-bold">🔄 Actualizar Datos</button>
+                </div>
+
+                <!-- Tabla Viajes Sorpresa -->
+                <div class="bg-white rounded-2xl shadow-xl p-6 border space-y-4">
+                    <h3 class="text-xl font-bold text-indigo-800">✈️ Desglose de Viajes Sorpresa Registrados</h3>
+                    <div class="overflow-x-auto">
+                        <table id="tabla-sorpresa" class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-slate-100 border-b">
+                                    <th class="p-2 border">Código</th>
+                                    <th class="p-2 border">Titular</th>
+                                    <th class="p-2 border">Pax</th>
+                                    <th class="p-2 border">Destino Real</th>
+                                    <th class="p-2 border">Hotel Asignado</th>
+                                    <th class="p-2 border">Vuelo</th>
+                                    <th class="p-2 border">Hotel (€)</th>
+                                    <th class="p-2 border">Actividades</th>
+                                    <th class="p-2 border">Comida</th>
+                                    <th class="p-2 border">Seguro</th>
+                                    <th class="p-2 border">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="body-sorpresa"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tabla Viajes a Medida -->
+                <div class="bg-white rounded-2xl shadow-xl p-6 border space-y-4">
+                    <h3 class="text-xl font-bold text-indigo-800">🗺️ Desglose de Viajes a Medida Registrados</h3>
+                    <div class="overflow-x-auto">
+                        <table id="tabla-medida" class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-slate-100 border-b">
+                                    <th class="p-2 border">Código</th>
+                                    <th class="p-2 border">Titular</th>
+                                    <th class="p-2 border">Pax</th>
+                                    <th class="p-2 border">Destino</th>
+                                    <th class="p-2 border">Hotel Asignado</th>
+                                    <th class="p-2 border">Vuelo</th>
+                                    <th class="p-2 border">Hotel (€)</th>
+                                    <th class="p-2 border">Actividades</th>
+                                    <th class="p-2 border">Comida</th>
+                                    <th class="p-2 border">Seguro</th>
+                                    <th class="p-2 border">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="body-medida"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>
@@ -195,42 +254,17 @@
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative space-y-6">
             <button onclick="cerrarModalAuth()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
             <div id="auth-panel-no-logueado">
-                <div class="flex border-b mb-6">
-                    <button id="tab-login" onclick="cambiarTabModal('login')" class="flex-1 pb-3 font-bold text-indigo-600 border-b-2 border-indigo-600">Iniciar Sesión</button>
-                    <button id="tab-register" onclick="cambiarTabModal('register')" class="flex-1 pb-3 font-bold text-slate-400 border-b-2 border-transparent">Registrarse</button>
-                </div>
                 <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
                     <div>
-                        <label class="block text-sm font-semibold mb-1">Correo Electrónico</label>
+                        <label class="block text-sm font-semibold mb-1">Correo</label>
                         <input type="email" id="login-email" required class="w-full border rounded-xl px-4 py-3 outline-none">
                     </div>
                     <div>
                         <label class="block text-sm font-semibold mb-1">Contraseña</label>
                         <input type="password" id="login-password" required class="w-full border rounded-xl px-4 py-3 outline-none">
                     </div>
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl shadow transition">Entrar</button>
+                    <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-xl">Entrar</button>
                 </form>
-                <form id="form-register" onsubmit="handleRegister(event)" class="space-y-4 hidden">
-                    <div>
-                        <label class="block text-sm font-semibold mb-1">Nombre</label>
-                        <input type="text" id="reg-nombre" required class="w-full border rounded-xl px-4 py-3 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold mb-1">Correo Electrónico</label>
-                        <input type="email" id="reg-email" required class="w-full border rounded-xl px-4 py-3 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold mb-1">Contraseña</label>
-                        <input type="password" id="reg-password" required class="w-full border rounded-xl px-4 py-3 outline-none">
-                    </div>
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl shadow transition">Crear Cuenta</button>
-                </form>
-                <p id="auth-mensaje" class="mt-4 text-sm text-center font-medium"></p>
-            </div>
-            <div id="auth-panel-logueado" class="hidden space-y-4 text-center">
-                <h3 class="text-2xl font-black text-indigo-900">👤 Mi Cuenta</h3>
-                <p id="cuenta-nombre" class="text-lg font-bold text-slate-700"></p>
-                <button onclick="cerrarSesion()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl transition">Cerrar Sesión</button>
             </div>
         </div>
     </div>
@@ -244,29 +278,19 @@
         let datosUltimoViaje = null;
 
         function mostrarSeccion(seccion) {
-            ['inicio', 'sorpresa', 'medida', 'contacto'].forEach(s => {
+            ['inicio', 'sorpresa', 'medida', 'contacto', 'desarrollador'].forEach(s => {
                 document.getElementById(`seccion-${s}`).classList.add('hidden');
                 const navBtn = document.getElementById(`nav-${s}`);
-                if (navBtn) navBtn.className = "hover:text-indigo-200 pb-1";
+                if (navBtn && s !== 'desarrollador') navBtn.className = "hover:text-indigo-200 pb-1";
             });
             document.getElementById(`seccion-${seccion}`).classList.remove('hidden');
             const activeNav = document.getElementById(`nav-${seccion}`);
-            if (activeNav) activeNav.className = "hover:text-indigo-200 border-b-2 border-white pb-1 font-bold";
+            if (activeNav && seccion !== 'desarrollador') activeNav.className = "hover:text-indigo-200 border-b-2 border-white pb-1 font-bold";
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function abrirModalAuth() { document.getElementById('modal-auth').classList.remove('hidden'); }
         function cerrarModalAuth() { document.getElementById('modal-auth').classList.add('hidden'); }
-
-        function cambiarTabModal(tab) {
-            if (tab === 'login') {
-                document.getElementById('form-login').classList.remove('hidden');
-                document.getElementById('form-register').classList.add('hidden');
-            } else {
-                document.getElementById('form-register').classList.remove('hidden');
-                document.getElementById('form-login').classList.add('hidden');
-            }
-        }
 
         async function handleLogin(e) {
             e.preventDefault();
@@ -281,53 +305,55 @@
                 const data = await res.json();
                 if (data.exito) {
                     usuarioActual = data.usuario;
-                    actualizarEstadoUsuario();
+                    document.getElementById('pago-titular').value = usuarioActual.nombre;
                     cerrarModalAuth();
-                } else {
-                    document.getElementById('auth-mensaje').innerText = data.mensaje;
-                }
+                } else { alert(data.mensaje); }
             } catch (err) { alert("Error de conexión."); }
         }
 
-        async function handleRegister(e) {
+        function verificarDevLogin(e) {
             e.preventDefault();
-            const nombre = document.getElementById('reg-nombre').value;
-            const email = document.getElementById('reg-email').value;
-            const password = document.getElementById('reg-password').value;
-            try {
-                const res = await fetch('/api/auth/registro', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ nombre, email, password })
-                });
-                const data = await res.json();
-                if (data.exito) {
-                    cambiarTabModal('login');
-                } else {
-                    document.getElementById('auth-mensaje').innerText = data.mensaje;
-                }
-            } catch (err) { alert("Error de conexión."); }
-        }
+            const email = document.getElementById('dev-email').value;
+            const password = document.getElementById('dev-password').value;
 
-        function actualizarEstadoUsuario() {
-            const btnAuth = document.getElementById('btn-nav-auth');
-            if (usuarioActual) {
-                btnAuth.innerText = "Cuenta";
-                document.getElementById('auth-panel-no-logueado').classList.add('hidden');
-                document.getElementById('auth-panel-logueado').classList.remove('hidden');
-                document.getElementById('cuenta-nombre').innerText = usuarioActual.nombre;
-                document.getElementById('pago-titular').value = usuarioActual.nombre;
+            if (email === 'jonpla1204@gmail.com' && password === 'JonnnP12') {
+                document.getElementById('dev-login-box').classList.add('hidden');
+                document.getElementById('dev-panel-datos').classList.remove('hidden');
+                cargarRegistrosDev();
             } else {
-                btnAuth.innerText = "Iniciar Sesión";
-                document.getElementById('auth-panel-no-logueado').classList.remove('hidden');
-                document.getElementById('auth-panel-logueado').classList.add('hidden');
+                document.getElementById('dev-error').innerText = "Credenciales de desarrollador incorrectas.";
             }
         }
 
-        function cerrarSesion() {
-            usuarioActual = null;
-            actualizarEstadoUsuario();
-            cerrarModalAuth();
+        async function cargarRegistrosDev() {
+            try {
+                const res = await fetch('/api/desarrollador/registros');
+                const data = await res.json();
+                if (data.exito) {
+                    llenarTabla('body-sorpresa', data.sorpresas);
+                    llenarTabla('body-medida', data.medidas);
+                }
+            } catch (err) { alert("Error al cargar los registros."); }
+        }
+
+        function llenarTabla(bodyId, lineasCsv) {
+            const tbody = document.getElementById(bodyId);
+            tbody.innerHTML = '';
+            // Omitir la primera línea (cabecera del csv)
+            for (let i = 1; i < lineasCsv.length; i++) {
+                const fila = lineasCsv[i];
+                if (!fila.trim()) continue;
+                const columnas = fila.split(',').map(c => c.replace(/"/g, ''));
+                const tr = document.createElement('tr');
+                tr.className = "border-b hover:bg-slate-50";
+                columnas.forEach(col => {
+                    const td = document.createElement('td');
+                    td.className = "p-2 border text-slate-700";
+                    td.innerText = col;
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            }
         }
 
         async function handleSolicitarViaje(e) {
@@ -348,8 +374,6 @@
                 if (data.exito) {
                     datosUltimoViaje = data;
                     document.getElementById('res-titulo').innerText = data.titulo;
-                    document.getElementById('res-destino').innerText = data.destinoAsignado;
-                    document.getElementById('res-origen').innerText = data.origenSalida;
                     document.getElementById('res-tiempo').innerText = data.tiempoVueloEst;
                     document.getElementById('res-precio').innerText = data.precioEstimado;
                     document.getElementById('res-equipaje').innerText = data.equipajeRecomendado;
@@ -401,22 +425,13 @@
             if (!datosUltimoViaje) return;
 
             const titular = document.getElementById('pago-titular').value;
-            const tarjeta = document.getElementById('pago-tarjeta').value;
-            const expira = document.getElementById('pago-exp').value;
-            const cvc = document.getElementById('pago-cvc').value;
 
             const payload = {
                 titular,
-                tarjeta,
-                expira,
-                cvc,
                 importe: datosUltimoViaje.precioEstimado,
                 destino: datosUltimoViaje.destinoRealInterno,
-                peticion: document.getElementById('viaje-peticion') ? document.getElementById('viaje-peticion').value : 'Medida',
                 tipoViaje: datosUltimoViaje.tipoViaje,
                 pasajeros: datosUltimoViaje.pasajeros,
-                fechaSalida: datosUltimoViaje.fechaSalida,
-                fechaRegreso: datosUltimoViaje.fechaRegreso,
                 costeVueloBase: datosUltimoViaje.costeVueloBase,
                 costeHotelBase: datosUltimoViaje.costeHotelBase,
                 vueloInfo: datosUltimoViaje.vueloInfo,
@@ -435,9 +450,7 @@
                     document.getElementById('exito-reserva').classList.remove('hidden');
                     document.getElementById('codigo-reserva').innerText = data.codigoReserva;
                     document.getElementById('exito-reserva').scrollIntoView({ behavior: 'smooth' });
-                } else {
-                    alert("Error en el pago: " + data.mensaje);
-                }
+                } else { alert("Error en el pago: " + data.mensaje); }
             } catch (err) { alert("Error de conexión en el pago."); }
         }
     </script>
