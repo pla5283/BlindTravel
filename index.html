@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlindTravel | Agencia de Viajes y Experiencias Sorpresa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --card-bg: #ffffff;
+            --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: var(--dark);
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #60a5fa, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        nav a:hover, nav a.active {
+            color: white;
+        }
+
+        .btn-auth {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-auth:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: white;
+            border-radius: var(--radius);
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            color: #94a3b8;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .grid-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .card-feature {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .card-feature h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .form-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .form-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-card p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+
+        .form-group textarea, .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            background-color: #ffffff;
+        }
+
+        .form-group textarea:focus, .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .date-range-wrapper {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0.5rem 1rem;
+            gap: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .date-range-wrapper:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .date-field-group {
+            flex: 1;
+        }
+
+        .date-field-group label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--gray);
+            font-weight: 700;
+            margin-bottom: 0.1rem;
+            display: block;
+        }
+
+        .date-field-group input[type="date"] {
+            border: none !important;
+            outline: none !important;
+            padding: 0.3rem 0 !important;
+            font-size: 0.95rem;
+            font-weight: 600;
+            background: transparent !important;
+            box-shadow: none !important;
+            width: 100%;
+            color: var(--dark);
+            cursor: pointer;
+        }
+
+        .date-range-divider {
+            font-weight: 700;
+            color: var(--gray);
+            font-size: 1.2rem;
+            padding-top: 1rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-hover);
+        }
+
+        .result-box {
+            background: #eff6ff;
+            border: 2px solid #bfdbfe;
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .payment-modal {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(6px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+        }
+
+        .payment-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            max-width: 460px;
+            width: 90%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: modalIn 0.3s ease;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .virtual-card {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: white;
+            border-radius: 14px;
+            padding: 1.5rem;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .virtual-card::after {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+        }
+
+        .card-chip {
+            width: 40px;
+            height: 30px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-radius: 6px;
+            margin-bottom: 1.2rem;
+        }
+
+        .card-number-display {
+            font-family: monospace;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            margin-bottom: 1.2rem;
+        }
+
+        .card-info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #cbd5e1;
+        }
+
+        .card-info-row span {
+            font-weight: 600;
+            color: white;
+        }
+
+        .success-banner {
+            background: #ecfdf5;
+            border: 2px solid #a7f3d0;
+            color: #065f46;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .auth-toggle-tabs {
+            display: flex;
+            background: #f1f5f9;
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .auth-toggle-btn {
+            flex: 1;
+            padding: 0.7rem;
+            border: none;
+            background: transparent;
+            font-weight: 700;
+            color: var(--gray);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .auth-toggle-btn.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        footer {
+            background: var(--dark);
+            color: #64748b;
+            text-align: center;
+            padding: 2rem;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo" onclick="switchTab('inicio')">✈️ BlindTravel</div>
+            <nav>
+                <ul>
+                    <li><a onclick="switchTab('inicio')" id="nav-inicio" class="active">Inicio</a></li>
+                    <li><a onclick="switchTab('sorpresa')" id="nav-sorpresa">Viaje Sorpresa</a></li>
+                    <li><a onclick="switchTab('medida')" id="nav-medida">Viaje a Medida</a></li>
+                    <li><a onclick="switchTab('contacto')" id="nav-contacto">Contacto</a></li>
+                    <li><button class="btn-auth" onclick="switchTab('login')" id="btn-login-label">Mi Cuenta</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="tab-inicio" class="tab-content active">
+            <div class="hero">
+                <h1>Descubre el Mundo Sin Límites</h1>
+                <p>Especialistas en viajes sorpresa adaptados a tu presupuesto exacto y paquetes personalizados con salida coordinada desde Donostia / San Sebastián.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <button class="btn-auth" style="padding: 1rem 2rem; font-size: 1.1rem;" onclick="switchTab('sorpresa')">Probar Viaje Sorpresa</button>
+                </div>
+            </div>
+            <div class="grid-features">
+                <div class="card-feature">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎲</div>
+                    <h3>Blind Travel</h3>
+                    <p>Fija tu presupuesto máximo y restricciones. Nosotros diseñamos el destino perfecto.</p>
+                </div>
+                <div class="card-feature">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌟</div>
+                    <h3>A Medida</h3>
+                    <p>Diseño detallado paso a paso adaptado a tus gustos e intereses.</p>
+                </div>
+                <div class="card-feature">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎧</div>
+                    <h3>Gestión Exclusiva 24/7</h3>
+                    <p>Asistencia personalizada y soporte continuo durante todo tu itinerario de viaje.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIAJE SORPRESA -->
+        <section id="tab-sorpresa" class="tab-content">
+            <div class="form-card">
+                <h2>🎲 Diseña tu Viaje Sorpresa</h2>
+                <p>Indica tu presupuesto, número de pasajeros y fechas de tu viaje.</p>
+                
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Presupuesto por Persona (€)</label>
+                        <input type="number" id="sorpresa-presupuesto" placeholder="Ej. 450" value="450">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Número de Pasajeros</label>
+                        <select id="sorpresa-pasajeros">
+                            <option value="1">1 Viajero</option>
+                            <option value="2" selected>2 Viajeros</option>
+                            <option value="3">3 Viajeros</option>
+                            <option value="4">4 Viajeros</option>
+                            <option value="5">5+ Viajeros</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Fechas de Viaje (Ida y Vuelta)</label>
+                    <div class="date-range-wrapper">
+                        <div class="date-field-group">
+                            <label>Fecha de Salida</label>
+                            <input type="date" id="sorpresa-salida" value="2026-11-10">
+                        </div>
+                        <div class="date-range-divider">→</div>
+                        <div class="date-field-group">
+                            <label>Fecha de Regreso</label>
+                            <input type="date" id="sorpresa-regreso" value="2026-11-17">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Restricciones (Lo que NO te apetece o prefieres evitar, continente deseado...)</label>
+                    <textarea id="sorpresa-peticion" rows="3" placeholder="Ej: Quiero viajar por Sudamérica, no más de 12 horas de avión..."></textarea>
+                </div>
+                <button class="btn-submit" onclick="generarViaje('sorpresa')">Generar Propuesta Sorpresa</button>
+
+                <div id="res-sorpresa" class="result-box"></div>
+            </div>
+        </section>
+
+        <!-- VIAJE A MEDIDA -->
+        <section id="tab-medida" class="tab-content">
+            <div class="form-card">
+                <h2>🗺️ Planifica tu Viaje Personalizado</h2>
+                <p>Indica tu presupuesto, número de pasajeros, fechas y la experiencia que buscas.</p>
+                
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Presupuesto por Persona (€)</label>
+                        <input type="number" id="medida-presupuesto" placeholder="Ej. 1000" value="1000">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Número de Pasajeros</label>
+                        <select id="medida-pasajeros">
+                            <option value="1">1 Viajero</option>
+                            <option value="2" selected>2 Viajeros</option>
+                            <option value="3">3 Viajeros</option>
+                            <option value="4">4 Viajeros</option>
+                            <option value="5">5+ Viajeros</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Fechas de Viaje (Ida y Vuelta)</label>
+                    <div class="date-range-wrapper">
+                        <div class="date-field-group">
+                            <label>Fecha de Salida</label>
+                            <input type="date" id="medida-salida" value="2026-12-01">
+                        </div>
+                        <div class="date-range-divider">→</div>
+                        <div class="date-field-group">
+                            <label>Fecha de Regreso</label>
+                            <input type="date" id="medida-regreso" value="2026-12-15">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>¿Qué experiencia buscas?</label>
+                    <textarea id="medida-peticion" rows="4" placeholder="Ej: Viaje a Cartagena de Indias, Colombia, con hotel frente al mar..."></textarea>
+                </div>
+                <button class="btn-submit" onclick="generarViaje('medida')">Crear Itinerario Personalizado</button>
+
+                <div id="res-medida" class="result-box"></div>
+            </div>
+        </section>
+
+        <section id="tab-contacto" class="tab-content">
+            <div class="form-card">
+                <h2>📞 Contacta con BlindTravel</h2>
+                <p>Nuestros asesores de viaje están disponibles para resolver cualquier consulta.</p>
+                <div class="form-group">
+                    <label>Nombre Completo</label>
+                    <input type="text" placeholder="Tu nombre">
+                </div>
+                <div class="form-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" placeholder="correo@ejemplo.com">
+                </div>
+                <div class="form-group">
+                    <label>Mensaje</label>
+                    <textarea rows="4" placeholder="Escribe tu consulta..."></textarea>
+                </div>
+                <button class="btn-submit">Enviar Mensaje</button>
+            </div>
+        </section>
+
+        <section id="tab-login" class="tab-content">
+            <div class="form-card" style="max-width: 480px;">
+                <div class="auth-toggle-tabs">
+                    <button id="toggle-btn-login" class="auth-toggle-btn active" onclick="setAuthTab('login')">Iniciar Sesión</button>
+                    <button id="toggle-btn-register" class="auth-toggle-btn" onclick="setAuthTab('register')">Crear Cuenta</button>
+                </div>
+
+                <div id="auth-box-login">
+                    <h2 style="font-size: 1.5rem;">🔐 Iniciar Sesión</h2>
+                    <p style="font-size: 0.9rem;">Accede a tu cuenta para gestionar tus reservas.</p>
+                    
+                    <div class="form-group">
+                        <label>Correo Electrónico</label>
+                        <input type="email" id="login-email" placeholder="usuario@cliente.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="login-password" placeholder="••••••••">
+                    </div>
+                    <button class="btn-submit" onclick="ejecutarLogin()">Entrar</button>
+                </div>
+
+                <div id="auth-box-register" style="display: none;">
+                    <h2 style="font-size: 1.5rem;">📝 Crear Cuenta</h2>
+                    <p style="font-size: 0.9rem;">Regístrate para realizar y consultar tus reservas.</p>
+                    
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1;">
+                            <label>Nombre</label>
+                            <input type="text" id="reg-nombre" placeholder="Tu nombre">
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label>Apellidos</label>
+                            <input type="text" id="reg-apellidos" placeholder="Tus apellidos">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Correo Electrónico</label>
+                        <input type="email" id="reg-email" placeholder="usuario@cliente.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="reg-password" placeholder="••••••••">
+                    </div>
+                    <button class="btn-submit" style="background: #10b981;" onclick="ejecutarRegistro()">Registrarse</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL DE PAGO -->
+    <div id="modal-pago" class="payment-modal">
+        <div class="payment-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;">
+                <h3 style="font-size: 1.4rem;">💳 Pago Seguro</h3>
+                <span style="font-size: 1.8rem; cursor: pointer; color: var(--gray); line-height: 1;" onclick="cerrarPago()">&times;</span>
+            </div>
+
+            <div class="virtual-card">
+                <div class="card-chip"></div>
+                <div class="card-number-display" id="card-num-preview">•••• •••• •••• ••••</div>
+                <div class="card-info-row">
+                    <div>Titular<br><span id="card-holder-preview">NOMBRE APELLIDO</span></div>
+                    <div>Expira<br><span id="card-exp-preview">MM/AA</span></div>
+                </div>
+            </div>
+            
+            <div id="payment-form-body">
+                <div class="form-group">
+                    <label>Titular de la Tarjeta</label>
+                    <input type="text" id="card-holder" placeholder="Nombre completo">
+                </div>
+                
+                <div class="form-group">
+                    <label>Número de Tarjeta</label>
+                    <input type="text" id="card-number" placeholder="4500 0000 0000 0000" maxlength="19">
+                </div>
+                
+                <div style="display: flex; gap: 1rem;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Caducidad (MM/AA)</label>
+                        <input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>CVC / CVV</label>
+                        <input type="password" id="card-cvc" placeholder="123" maxlength="3">
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem;">
+                    <span style="color: var(--gray); font-weight: 600;">Total a abonar:</span>
+                    <span id="payment-amount" style="font-size: 1.3rem; font-weight: 800; color: var(--primary);">0€</span>
+                </div>
+
+                <button class="btn-submit" style="background: #10b981;" onclick="procesarPago()">Confirmar</button>
+            </div>
+
+            <div id="success-banner" class="success-banner">
+                <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎉</div>
+                <h3 style="margin-bottom: 0.5rem;">¡Reserva Confirmada!</h3>
+                <p>Código de Reserva: <b id="banner-code">BT-000000</b></p>
+                <p style="margin-top: 0.4rem;">Destino Asignado: <b id="banner-destino">---------------</b></p>
+                <p style="font-size: 0.85rem; color: #047857; margin-top: 0.8rem;">Origen de Salida: <b>Donostia-San Sebastián / Bilbao</b></p>
+                <button class="btn-submit" style="margin-top: 1.2rem; background: var(--dark);" onclick="cerrarPago()">Aceptar y Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 BlindTravel S.L. - Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        let datosViajeActual = {};
+        let usuarioSesion = null;
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('nav a').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+            const navBtn = document.getElementById(`nav-${tabId}`);
+            if(navBtn) navBtn.classList.add('active');
+        }
+
+        function setAuthTab(tipo) {
+            if (tipo === 'login') {
+                document.getElementById('toggle-btn-login').classList.add('active');
+                document.getElementById('toggle-btn-register').classList.remove('active');
+                document.getElementById('auth-box-login').style.display = 'block';
+                document.getElementById('auth-box-register').style.display = 'none';
+            } else {
+                document.getElementById('toggle-btn-register').classList.add('active');
+                document.getElementById('toggle-btn-login').classList.remove('active');
+                document.getElementById('auth-box-register').style.display = 'block';
+                document.getElementById('auth-box-login').style.display = 'none';
+            }
+        }
+
+        async function ejecutarRegistro() {
+            const nombre = document.getElementById('reg-nombre').value;
+            const apellidos = document.getElementById('reg-apellidos').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+
+            if(!nombre || !email || !password) return alert('Por favor, completa los campos requeridos.');
+
+            const res = await fetch('http://localhost:3000/api/auth/registro', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nombre, apellidos, email, password })
+            });
+
+            const data = await res.json();
+            if(data.exito) {
+                alert('🎉 ¡Cuenta creada con éxito! Ahora puedes iniciar sesión.');
+                setAuthTab('login');
+            } else {
+                alert(`❌ ${data.mensaje}`);
+            }
+        }
+
+        async function ejecutarLogin() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            if(!email || !password) return alert('Introduce tu email y contraseña.');
+
+            const res = await fetch('http://localhost:3000/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await res.json();
+            if(data.exito) {
+                usuarioSesion = data.usuario;
+                document.getElementById('btn-login-label').innerText = `👤 ${data.usuario.nombre}`;
+                alert(`¡Bienvenido/a de nuevo, ${data.usuario.nombre}!`);
+                switchTab('inicio');
+            } else {
+                alert(`❌ ${data.mensaje}`);
+            }
+        }
+
+        const inputCardNum = document.getElementById('card-number');
+        const inputCardHolder = document.getElementById('card-holder');
+        const inputCardExpiry = document.getElementById('card-expiry');
+
+        inputCardNum.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/\D/g, '').substring(0, 16);
+            val = val.replace(/(\d{4})(?=\d)/g, '$1 ');
+            e.target.value = val;
+            document.getElementById('card-num-preview').innerText = val || '•••• •••• •••• ••••';
+        });
+
+        inputCardHolder.addEventListener('input', (e) => {
+            const val = e.target.value.toUpperCase();
+            document.getElementById('card-holder-preview').innerText = val || 'NOMBRE APELLIDO';
+        });
+
+        inputCardExpiry.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/\D/g, '');
+            if (val.length >= 2) {
+                val = val.substring(0, 2) + '/' + val.substring(2, 4);
+            }
+            e.target.value = val;
+            document.getElementById('card-exp-preview').innerText = val || 'MM/AA';
+        });
+
+        async function generarViaje(tipo) {
+            const peticion = tipo === 'sorpresa' 
+                ? document.getElementById('sorpresa-peticion').value 
+                : document.getElementById('medida-peticion').value;
+
+            const presupuesto = tipo === 'sorpresa' 
+                ? document.getElementById('sorpresa-presupuesto').value 
+                : document.getElementById('medida-presupuesto').value;
+
+            const pasajeros = tipo === 'sorpresa'
+                ? document.getElementById('sorpresa-pasajeros').value
+                : document.getElementById('medida-pasajeros').value;
+
+            const fechaSalida = tipo === 'sorpresa'
+                ? document.getElementById('sorpresa-salida').value
+                : document.getElementById('medida-salida').value;
+
+            const fechaRegreso = tipo === 'sorpresa'
+                ? document.getElementById('sorpresa-regreso').value
+                : document.getElementById('medida-regreso').value;
+
+            const resBox = document.getElementById(`res-${tipo}`);
+            resBox.style.display = 'block';
+            resBox.innerHTML = '⏳ <i>IA analizando destino, pasajeros y calculando presupuesto...</i>';
+
+            try {
+                const response = await fetch('http://localhost:3000/api/viaje', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tipo, peticion, presupuesto, pasajeros, fechaSalida, fechaRegreso })
+                });
+
+                const data = await response.json();
+                
+                datosViajeActual = {
+                    tipoViaje: data.tipoViaje,
+                    precio: data.precioEstimado,
+                    destino: data.destinoAsignado,
+                    destinoRealInterno: data.destinoRealInterno,
+                    peticion: peticion,
+                    pasajeros: data.pasajeros,
+                    fechaSalida: data.fechaSalida,
+                    fechaRegreso: data.fechaRegreso,
+                    costeVueloAprox: data.costeVueloAprox,
+                    costeHotelAprox: data.costeHotelAprox
+                };
+
+                if (tipo === 'sorpresa') {
+                    resBox.innerHTML = `
+                        <h3>${data.titulo}</h3>
+                        <p style="margin-top:0.5rem;"><b>Destino Asignado:</b> ---------------</p>
+                        <p style="margin-top:0.4rem; font-size:0.9rem; color:var(--primary);"><b>Duración Est. de Vuelo:</b> ${data.tiempoVueloEst}</p>
+                        <p style="margin-top:0.2rem; font-size:0.85rem; color:var(--gray);"><b>Viajeros:</b> ${data.pasajeros} pasajero(s)</p>
+                        <p style="margin-top:0.2rem; font-size:0.85rem; color:var(--gray);"><b>Fechas de Viaje:</b> ${data.fechaSalida} al ${data.fechaRegreso}</p>
+                        <p style="margin-top:0.2rem; font-size:0.85rem; color:var(--gray);"><b>Origen de Salida:</b> ${data.origenSalida}</p>
+                        <p style="margin-top:0.5rem;"><b>Pistas del Destino:</b></p>
+                        <ul>${data.pistas.map(p => `<li>${p}</li>`).join('')}</ul>
+                        <p style="margin-top:0.5rem;"><b>Equipaje recomendado:</b> ${data.equipajeRecomendado}</p>
+                        <p style="margin-top:0.8rem; font-size:1.2rem; color:var(--primary);"><b>Presupuesto Total:</b> ${data.precioEstimado}</p>
+                        <button class="btn-submit" style="margin-top:1rem; background:#10b981;" onclick="abrirPago()">Reservar Viaje</button>
+                    `;
+                } else {
+                    resBox.innerHTML = `
+                        <h3>${data.titulo}</h3>
+                        <p style="margin-top:0.5rem;"><b>Destino Seleccionado:</b> ${data.destinoAsignado}</p>
+                        <p style="margin-top:0.4rem; font-size:0.85rem; color:var(--gray);"><b>Viajeros:</b> ${data.pasajeros} pasajero(s)</p>
+                        <p style="margin-top:0.2rem; font-size:0.85rem; color:var(--gray);"><b>Fechas de Viaje:</b> ${data.fechaSalida} al ${data.fechaRegreso}</p>
+                        <p style="margin-top:0.2rem; font-size:0.85rem; color:var(--gray);"><b>Origen de Salida:</b> ${data.origenSalida}</p>
+                        <p style="margin-top:0.5rem;"><b>Itinerario Propuesto:</b> ${data.itinerario}</p>
+                        <p style="margin-top:0.8rem; font-size:1.2rem; color:var(--primary);"><b>Presupuesto Total:</b> ${data.precioEstimado}</p>
+                        <button class="btn-submit" style="margin-top:1rem; background:#10b981;" onclick="abrirPago()">Reservar Viaje</button>
+                    `;
+                }
+            } catch (err) {
+                resBox.innerHTML = '❌ Ocurrió un error al procesar la propuesta.';
+            }
+        }
+
+        function abrirPago() {
+            document.getElementById('payment-amount').innerText = datosViajeActual.precio;
+            document.getElementById('payment-form-body').style.display = 'block';
+            document.getElementById('success-banner').style.display = 'none';
+            document.getElementById('modal-pago').style.display = 'flex';
+        }
+
+        function cerrarPago() {
+            document.getElementById('modal-pago').style.display = 'none';
+        }
+
+        async function procesarPago() {
+            const titular = document.getElementById('card-holder').value;
+            const tarjeta = document.getElementById('card-number').value;
+
+            if(!titular || !tarjeta) return alert('Por favor, completa los datos de la tarjeta.');
+
+            const res = await fetch('http://localhost:3000/api/pagar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    titular, 
+                    tarjeta, 
+                    importe: datosViajeActual.precio,
+                    destino: datosViajeActual.destinoRealInterno || datosViajeActual.destino,
+                    peticion: datosViajeActual.peticion,
+                    tipoViaje: datosViajeActual.tipoViaje,
+                    pasajeros: datosViajeActual.pasajeros,
+                    fechaSalida: datosViajeActual.fechaSalida,
+                    fechaRegreso: datosViajeActual.fechaRegreso,
+                    costeVueloAprox: datosViajeActual.costeVueloAprox,
+                    costeHotelAprox: datosViajeActual.costeHotelAprox
+                })
+            });
+
+            const data = await res.json();
+            if(data.exito) {
+                document.getElementById('payment-form-body').style.display = 'none';
+                document.getElementById('banner-code').innerText = data.codigoReserva;
+                document.getElementById('banner-destino').innerText = datosViajeActual.tipoViaje === 'sorpresa' ? '---------------' : datosViajeActual.destino;
+                document.getElementById('success-banner').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
