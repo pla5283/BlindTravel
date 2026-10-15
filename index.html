@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlindTravel - Tu Agencia de Viajes Sorpresa y a Medida</title>
+    <title>BlindTravel - Viajes Sorpresa y a Medida</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
@@ -77,8 +77,8 @@
                 <form id="form-viaje" onsubmit="handleSolicitarViaje(event)" class="space-y-4">
                     <input type="hidden" id="tipo-viaje" value="sorpresa">
                     <div>
-                        <label id="label-peticion" class="block text-sm font-medium mb-1">Restricciones / Pistas / Preferencias (ej. "Playas del Caribe", "Clima frío", "Roma"):</label>
-                        <textarea id="viaje-peticion" rows="3" required class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Indica tus gustos, clima deseado o destino soñado..."></textarea>
+                        <label id="label-peticion" class="block text-sm font-medium mb-1">Restricciones / Pistas / Preferencias:</label>
+                        <textarea id="viaje-peticion" rows="3" required class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="Indica tus gustos o preferencias..."></textarea>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
@@ -136,7 +136,7 @@
                 </div>
             </div>
 
-            <!-- Success Confirmation Modal/Box -->
+            <!-- Success Confirmation Box -->
             <div id="exito-reserva" class="bg-emerald-50 border border-emerald-200 text-emerald-800 p-6 rounded-xl shadow-lg hidden text-center space-y-3">
                 <h3 class="text-2xl font-bold">🎉 ¡Reserva Confirmada con Éxito!</h3>
                 <p>Código de Reserva: <strong id="codigo-reserva" class="text-xl"></strong></p>
@@ -152,7 +152,7 @@
         &copy; 2026 BlindTravel - Todos los derechos reservados.
     </footer>
 
-    <!-- JavaScript Logic -->
+    <!-- JavaScript Logic (Conectado a la nube) -->
     <script>
         let usuarioActual = null;
         let datosUltimoViaje = null;
@@ -187,11 +187,11 @@
             if (tipo === 'sorpresa') {
                 btnSorpresa.className = "flex-1 pb-3 font-semibold text-indigo-600 border-b-2 border-indigo-600 transition";
                 btnMedida.className = "flex-1 pb-3 font-semibold text-slate-400 border-b-2 border-transparent transition";
-                labelPeticion.innerText = 'Restricciones / Pistas / Preferencias (ej. "Playas del Caribe", "Clima frío", "Roma"):';
+                labelPeticion.innerText = 'Restricciones / Pistas / Preferencias:';
             } else {
                 btnMedida.className = "flex-1 pb-3 font-semibold text-indigo-600 border-b-2 border-indigo-600 transition";
                 btnSorpresa.className = "flex-1 pb-3 font-semibold text-slate-400 border-b-2 border-transparent transition";
-                labelPeticion.innerText = 'Describe tu viaje ideal a medida (ej. "Viaje cultural a Tokio 5 días", "Escapada a Roma"):';
+                labelPeticion.innerText = 'Describe tu viaje ideal a medida:';
             }
         }
 
@@ -298,7 +298,7 @@
                         document.getElementById('bloque-pistas').classList.add('hidden');
                     }
 
-                    document.getElementById('res-equipaje').innerText = data.equipajeRecomendado || "Ropa y calzado adecuados al destino.";
+                    document.getElementById('res-equipaje').innerText = data.equipajeRecomendado || "Ropa y calzado adecuados.";
                     document.getElementById('resultado-seccion').classList.remove('hidden');
                     document.getElementById('resultado-seccion').scrollIntoView({ behavior: 'smooth' });
                 }
