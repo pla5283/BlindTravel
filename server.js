@@ -1,10 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
+const path = require('path');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Servir archivos estáticos (index.html)
+app.use(express.static(path.join(__dirname)));
 
 const ARCHIVO_USUARIOS = 'usuarios.json';
 if (!fs.existsSync(ARCHIVO_USUARIOS)) {
@@ -12,7 +16,7 @@ if (!fs.existsSync(ARCHIVO_USUARIOS)) {
 }
 
 app.get('/', (req, res) => {
-    res.send('🚀 Servidor BlindTravel Cloud Ready (v3.4)');
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.post('/api/auth/registro', (req, res) => {
